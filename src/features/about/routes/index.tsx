@@ -4,7 +4,7 @@ const AboutPage = lazy(() => import("../pages/index"));
 
 export const aboutRoutes = [
   {
-    path: "/about",
+    path: "/contact",
     element: <AboutPage />,
   },
 ];

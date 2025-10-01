@@ -1,3 +1,7 @@
+"use client";
+
+import type React from "react";
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -12,7 +16,7 @@ const Navbar: React.FC = () => {
   const [lang, setLang] = useState("English");
 
   return (
-    <header className="w-full border-b">
+    <header className="w-full">
       {/* Top Bar */}
       <div className="bg-black text-white text-xs md:text-sm py-2 px-4 flex items-center justify-between">
         <p>
