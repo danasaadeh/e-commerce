@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import type React from "react";
 import { Link } from "react-router-dom";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -23,15 +25,15 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           {/* Newsletter / Exclusive (Left) */}
           <div className="md:col-span-3">
-            <h4 className="text-lg font-semibold mb-3">Exclusive</h4>
-            <p className="text-sm mb-3">Subscribe</p>
+            <h4 className="text-2xl font-bold mb-4">Exclusive</h4>
+            <p className="text-base font-medium mb-4">Subscribe</p>
 
-            <p className="text-xs text-gray-300 mb-4">
+            <p className="text-sm text-gray-300 mb-4">
               Get 10% off your first order
             </p>
 
             <form
-              className="flex items-center gap-2"
+              className="flex items-center"
               onSubmit={(e) => {
                 e.preventDefault();
                 // handle subscribe
@@ -45,12 +47,12 @@ const Footer: React.FC = () => {
                   id="footer-email"
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full bg-transparent border border-gray-600 rounded-md py-2 px-3 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500"
+                  className="w-full bg-black border border-white rounded py-3 px-4 pr-12 text-sm placeholder:text-gray-400 focus:outline-none focus:border-white"
                 />
                 <button
                   type="submit"
                   aria-label="Subscribe"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 bg-transparent p-2 border border-gray-600 rounded-md"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-gray-300"
                 >
                   <EmailOutlinedIcon fontSize="small" />
                 </button>
@@ -59,14 +61,13 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Three columns in middle */}
-          <div className="md:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="md:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div>
-              <h5 className="text-sm font-semibold mb-3">Support</h5>
-              <ul className="text-xs text-gray-300 space-y-2">
+              <h5 className="text-base font-medium mb-4">Support</h5>
+              <ul className="text-sm text-gray-300 space-y-3">
                 {links.support.map((item, idx) => (
-                  <li key={idx} className={idx === 0 ? "" : ""}>
+                  <li key={idx}>
                     {idx === 1 ? (
-                      // make email clickable
                       <a href={`mailto:${item}`} className="hover:underline">
                         {item}
                       </a>
@@ -79,8 +80,8 @@ const Footer: React.FC = () => {
             </div>
 
             <div>
-              <h5 className="text-sm font-semibold mb-3">Account</h5>
-              <ul className="text-xs text-gray-300 space-y-2">
+              <h5 className="text-base font-medium mb-4">Account</h5>
+              <ul className="text-sm text-gray-300 space-y-3">
                 {links.account.map((l) => (
                   <li key={l}>
                     <Link to="#" className="hover:underline">
@@ -92,8 +93,8 @@ const Footer: React.FC = () => {
             </div>
 
             <div>
-              <h5 className="text-sm font-semibold mb-3">Quick Link</h5>
-              <ul className="text-xs text-gray-300 space-y-2">
+              <h5 className="text-base font-medium mb-4">Quick Link</h5>
+              <ul className="text-sm text-gray-300 space-y-3">
                 {links.quick.map((l) => (
                   <li key={l}>
                     <Link to="#" className="hover:underline">
@@ -107,74 +108,79 @@ const Footer: React.FC = () => {
 
           {/* Download App / QR (Right) */}
           <div className="md:col-span-3">
-            <h4 className="text-sm font-semibold mb-3">Download App</h4>
-            <p className="text-xs text-gray-300 mb-3">
+            <h4 className="text-base font-medium mb-4">Download App</h4>
+            <p className="text-xs text-gray-400 mb-2">
               Save $3 with App New User Only
             </p>
 
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-2 mb-6">
               {/* QR */}
               <div className="flex-shrink-0">
                 <img
                   src="src/assets/images/qr.jpg"
                   alt="qr code"
-                  className="w-20 h-20 object-cover rounded-sm border border-gray-700"
+                  className="w-20 h-20 object-cover rounded border border-gray-700"
                 />
               </div>
 
-              <div className="flex-1 space-y-2">
+              <div className="flex flex-col gap-1">
                 <a href="#" className="inline-block">
                   <img
                     src="src/assets/images/google_play.png"
                     alt="Get it on Google Play"
-                    className="h-10 object-contain"
+                    className="h-9 object-contain"
                   />
                 </a>
                 <a href="#" className="inline-block">
                   <img
                     src="src/assets/images/app_store.png"
                     alt="Download on the App Store"
-                    className="h-10 object-contain"
+                    className="h-9 object-contain"
                   />
                 </a>
               </div>
             </div>
 
             {/* Social icons */}
-            <div className="mt-6 flex items-center gap-4 text-gray-300">
-              <a aria-label="facebook" href="#" className="hover:text-white">
-                <FacebookIcon fontSize="small" />
+            <div className="flex items-center gap-6 text-white">
+              <a aria-label="facebook" href="#" className="hover:text-gray-300">
+                <FacebookIcon fontSize="medium" />
               </a>
-              <a aria-label="twitter" href="#" className="hover:text-white">
-                <TwitterIcon fontSize="small" />
+              <a aria-label="twitter" href="#" className="hover:text-gray-300">
+                <TwitterIcon fontSize="medium" />
               </a>
-              <a aria-label="instagram" href="#" className="hover:text-white">
-                <InstagramIcon fontSize="small" />
+              <a
+                aria-label="instagram"
+                href="#"
+                className="hover:text-gray-300"
+              >
+                <InstagramIcon fontSize="medium" />
               </a>
-              <a aria-label="linkedin" href="#" className="hover:text-white">
-                <LinkedInIcon fontSize="small" />
+              <a aria-label="linkedin" href="#" className="hover:text-gray-300">
+                <LinkedInIcon fontSize="medium" />
               </a>
             </div>
           </div>
         </div>
 
-        {/* divider */}
-        <hr className="border-gray-800 mt-8" />
+        <div className="border-t border-gray-800 mt-10 pt-4">
+          <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-500 gap-4">
+            <div className="flex items-center gap-1">
+              <span>©</span>
+              <span>Copyright Rimel 2022. All right reserved</span>
+            </div>
 
-        {/* copyright / bottom row */}
-        <div className="mt-6 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
-          <div>© Copyright Rimel 2022. All right reserved</div>
-
-          <div className="flex items-center gap-4">
-            <Link to="#" className="hover:underline">
-              Privacy
-            </Link>
-            <Link to="#" className="hover:underline">
-              Terms
-            </Link>
-            <Link to="#" className="hover:underline">
-              Contact
-            </Link>
+            <div className="flex items-center gap-6">
+              <Link to="#" className="hover:underline hover:text-white">
+                Privacy
+              </Link>
+              <Link to="#" className="hover:underline hover:text-white">
+                Terms
+              </Link>
+              <Link to="#" className="hover:underline hover:text-white">
+                Contact
+              </Link>
+            </div>
           </div>
         </div>
       </div>
