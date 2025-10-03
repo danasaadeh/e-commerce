@@ -117,7 +117,7 @@ const Footer: React.FC = () => {
               {/* QR */}
               <div className="flex-shrink-0">
                 <img
-                  src="src/assets/images/qr.jpg"
+                  src="src/assets/images/footer/qr.jpg"
                   alt="qr code"
                   className="w-20 h-20 object-cover rounded border border-gray-700"
                 />
@@ -126,14 +126,14 @@ const Footer: React.FC = () => {
               <div className="flex flex-col gap-1">
                 <a href="#" className="inline-block">
                   <img
-                    src="src/assets/images/google_play.png"
+                    src="src/assets/icons/GooglePlay.svg"
                     alt="Get it on Google Play"
                     className="h-9 object-contain"
                   />
                 </a>
                 <a href="#" className="inline-block">
                   <img
-                    src="src/assets/images/app_store.png"
+                    src="src/assets/icons/AppStore.svg"
                     alt="Download on the App Store"
                     className="h-9 object-contain"
                   />
@@ -168,18 +168,6 @@ const Footer: React.FC = () => {
             <div className="flex items-center gap-1">
               <span>©</span>
               <span>Copyright Rimel 2022. All right reserved</span>
-            </div>
-
-            <div className="flex items-center gap-6">
-              <Link to="#" className="hover:underline hover:text-white">
-                Privacy
-              </Link>
-              <Link to="#" className="hover:underline hover:text-white">
-                Terms
-              </Link>
-              <Link to="#" className="hover:underline hover:text-white">
-                Contact
-              </Link>
             </div>
           </div>
         </div>

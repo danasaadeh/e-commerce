@@ -1,5 +1,5 @@
 import React from "react";
-import aboutImg from "../../../assets/images/home.jpg"; // replace with your image
+import aboutImg from "../../../assets/images/about/home.jpg"; // replace with your image
 
 const AboutStory: React.FC = () => {
   return (

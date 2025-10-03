@@ -9,7 +9,7 @@ const LoginForm: React.FC = () => {
         {/* Left Side Image */}
         <div className="flex justify-center items-center bg-[#CBE4E8]  min-h-[600px] md:min-h-screen">
           <img
-            src="/src/assets/images/login.jpg"
+            src="/src/assets/images/auth/login.jpg"
             alt="Login illustration"
             className="w-full h-full object-cover"
           />
