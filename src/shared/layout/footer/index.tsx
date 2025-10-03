@@ -2,12 +2,16 @@
 
 import type React from "react";
 import { Link } from "react-router-dom";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Send } from "@mui/icons-material";
+
+// ✅ Font Awesome imports
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebookF,
+  faTwitter,
+  faInstagram,
+  faLinkedinIn,
+} from "@fortawesome/free-brands-svg-icons";
 
 const links = {
   support: [
@@ -37,7 +41,6 @@ const Footer: React.FC = () => {
               className="flex items-center"
               onSubmit={(e) => {
                 e.preventDefault();
-                // handle subscribe
               }}
             >
               <label htmlFor="footer-email" className="sr-only">
@@ -61,7 +64,7 @@ const Footer: React.FC = () => {
             </form>
           </div>
 
-          {/* Three columns in middle */}
+          {/* Middle columns */}
           <div className="md:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div>
               <h5 className="text-base font-medium mb-4">Support</h5>
@@ -107,7 +110,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Download App / QR (Right) */}
+          {/* Right column */}
           <div className="md:col-span-3">
             <h4 className="text-base font-medium mb-4">Download App</h4>
             <p className="text-xs text-gray-400 mb-2">
@@ -115,7 +118,6 @@ const Footer: React.FC = () => {
             </p>
 
             <div className="flex items-start gap-2 mb-6">
-              {/* QR */}
               <div className="flex-shrink-0">
                 <img
                   src="src/assets/images/footer/qr.jpg"
@@ -123,19 +125,18 @@ const Footer: React.FC = () => {
                   className="w-20 h-20 object-cover rounded border border-gray-700"
                 />
               </div>
-
               <div className="flex flex-col gap-1">
                 <a href="#" className="inline-block">
                   <img
                     src="src/assets/icons/GooglePlay.svg"
-                    alt="Get it on Google Play"
+                    alt="Google Play"
                     className="h-9 object-contain"
                   />
                 </a>
                 <a href="#" className="inline-block">
                   <img
                     src="src/assets/icons/AppStore.svg"
-                    alt="Download on the App Store"
+                    alt="App Store"
                     className="h-9 object-contain"
                   />
                 </a>
@@ -143,22 +144,25 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Social icons */}
-            <div className="flex items-center gap-6 text-white">
+            <div className="flex items-center gap-6 text-white text-lg">
               <a aria-label="facebook" href="#" className="hover:text-gray-300">
-                <FacebookIcon fontSize="medium" />
+                <FontAwesomeIcon icon={faFacebookF} />
               </a>
-              <a aria-label="twitter" href="#" className="hover:text-gray-300">
-                <TwitterIcon fontSize="medium" />
-              </a>
+              <FontAwesomeIcon
+                icon={faTwitter}
+                className="text-transparent stroke-white"
+                style={{ strokeWidth: 20 }}
+              />
+
               <a
                 aria-label="instagram"
                 href="#"
                 className="hover:text-gray-300"
               >
-                <InstagramIcon fontSize="medium" />
+                <FontAwesomeIcon icon={faInstagram} />
               </a>
               <a aria-label="linkedin" href="#" className="hover:text-gray-300">
-                <LinkedInIcon fontSize="medium" />
+                <FontAwesomeIcon icon={faLinkedinIn} />
               </a>
             </div>
           </div>
