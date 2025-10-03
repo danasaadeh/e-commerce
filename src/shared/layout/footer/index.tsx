@@ -7,6 +7,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { Send } from "@mui/icons-material";
 
 const links = {
   support: [
@@ -54,7 +55,7 @@ const Footer: React.FC = () => {
                   aria-label="Subscribe"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-gray-300"
                 >
-                  <EmailOutlinedIcon fontSize="small" />
+                  <Send fontSize="small" />
                 </button>
               </div>
             </form>

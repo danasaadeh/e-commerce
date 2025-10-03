@@ -1,51 +1,97 @@
+"use client";
+
 import type React from "react";
+import { useState } from "react";
 
-// Import SVGs as image URLs
-import deliveryIcon from "../../../assets/icons/about/icon-delivery.svg";
-import headsetIcon from "../../../assets/icons/about/headphones.svg";
-import guaranteeIcon from "../../../assets/icons/about/Icon-secure.svg";
+// Import icons as string URLs (not React components!)
+import StorefrontIcon from "../../../assets/icons/about/shop.svg";
+import MoneyIcon from "../../../assets/icons/about/Icon-Sale.svg";
+import ShoppingBagIcon from "../../../assets/icons/about/Icon-Shoppingbag.svg";
+import SalesIcon from "../../../assets/icons/about/Icon-Moneybag.svg";
 
-const features = [
+const stats = [
   {
-    icon: deliveryIcon,
-    title: "FREE AND FAST DELIVERY",
-    desc: "Free delivery for all orders over $140",
+    icon: StorefrontIcon,
+    value: "10.5k",
+    label: "Sellers active on our site",
   },
   {
-    icon: headsetIcon,
-    title: "24/7 CUSTOMER SERVICE",
-    desc: "Friendly 24/7 customer support",
+    icon: MoneyIcon,
+    value: "33k",
+    label: "Monthly Product Sales",
   },
   {
-    icon: guaranteeIcon,
-    title: "MONEY BACK GUARANTEE",
-    desc: "We return money within 30 days",
+    icon: ShoppingBagIcon,
+    value: "45.5k",
+    label: "Customers active on our site",
+  },
+  {
+    icon: SalesIcon,
+    value: "25k",
+    label: "Annual gross sales",
   },
 ];
 
-const FeaturesSection: React.FC = () => {
-  return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-12 px-6 py-16">
-      {features.map((feature, idx) => (
-        <div key={idx} className="flex flex-col items-center text-center">
-          {/* Icon wrapper */}
-          <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center mb-6">
-            <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center">
-              <img
-                src={feature.icon}
-                alt={feature.title}
-                className="w-8 h-8 object-contain"
-              />
-            </div>
-          </div>
+const StatsSection: React.FC = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-          {/* Title & Description */}
-          <h4 className="font-bold text-lg mb-2">{feature.title}</h4>
-          <p className="text-gray-600 text-sm">{feature.desc}</p>
-        </div>
-      ))}
+  return (
+    <section className="grid grid-cols-1 md:grid-cols-4 gap-6 px-6 py-12">
+      {stats.map((stat, idx) => {
+        const isHovered = hoveredIndex === idx;
+
+        return (
+          <div
+            key={idx}
+            className={`p-8 rounded-lg border flex flex-col items-center justify-center text-center transition-all duration-300 cursor-pointer ${
+              isHovered
+                ? "bg-red-500 text-white border-red-500"
+                : "bg-white text-black border-gray-200 hover:shadow-lg"
+            }`}
+            onMouseEnter={() => setHoveredIndex(idx)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            {/* Outer circle */}
+            <div
+              className={`relative w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all duration-300 ${
+                isHovered ? "bg-white/30" : "bg-gray-300"
+              }`}
+            >
+              {/* Inner circle */}
+              <div
+                className={`w-14 h-14 rounded-full flex items-center justify-center transition-colors duration-300 ${
+                  isHovered ? "bg-white" : "bg-black"
+                }`}
+              >
+                <img
+                  src={stat.icon}
+                  alt={stat.label}
+                  className={`w-7 h-7 transition duration-300 ${
+                    isHovered ? "invert-0" : "invert"
+                  }`}
+                />
+              </div>
+            </div>
+
+            <h3
+              className={`text-3xl font-bold mb-2 transition-colors duration-300 ${
+                isHovered ? "text-white" : "text-black"
+              }`}
+            >
+              {stat.value}
+            </h3>
+            <p
+              className={`text-sm transition-colors duration-300 ${
+                isHovered ? "text-white" : "text-black"
+              }`}
+            >
+              {stat.label}
+            </p>
+          </div>
+        );
+      })}
     </section>
   );
 };
 
-export default FeaturesSection;
+export default StatsSection;
