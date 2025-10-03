@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+"use client";
+
+import type React from "react";
+import { useState } from "react";
 import { TextField, Button } from "@mui/material";
 
 const ContactForm: React.FC = () => {
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
@@ -12,60 +15,154 @@ const ContactForm: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Data:", form);
-    // TODO: integrate with backend API (using axios + react-query)
+    console.log("Form submitted:", formData);
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-gray-50 p-6 rounded-lg shadow-md flex flex-col gap-4"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
+      {/* Top Row: Name, Email, Phone */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <TextField
           name="name"
-          label="Your Name *"
-          value={form.name}
+          placeholder="Your Name *"
+          value={formData.name}
           onChange={handleChange}
+          required
           fullWidth
+          variant="filled"
+          InputProps={{
+            disableUnderline: true,
+            style: {
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+            },
+          }}
+          sx={{
+            "& .MuiFilledInput-root": {
+              backgroundColor: "#F5F5F5",
+              "&:hover": {
+                backgroundColor: "#F5F5F5",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#F5F5F5",
+              },
+            },
+          }}
         />
         <TextField
           name="email"
-          label="Your Email *"
-          value={form.email}
+          type="email"
+          placeholder="Your Email *"
+          value={formData.email}
           onChange={handleChange}
+          required
           fullWidth
+          variant="filled"
+          InputProps={{
+            disableUnderline: true,
+            style: {
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+            },
+          }}
+          sx={{
+            "& .MuiFilledInput-root": {
+              backgroundColor: "#F5F5F5",
+              "&:hover": {
+                backgroundColor: "#F5F5F5",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#F5F5F5",
+              },
+            },
+          }}
         />
         <TextField
           name="phone"
-          label="Your Phone *"
-          value={form.phone}
+          type="tel"
+          placeholder="Your Phone *"
+          value={formData.phone}
           onChange={handleChange}
+          required
           fullWidth
+          variant="filled"
+          InputProps={{
+            disableUnderline: true,
+            style: {
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+            },
+          }}
+          sx={{
+            "& .MuiFilledInput-root": {
+              backgroundColor: "#F5F5F5",
+              "&:hover": {
+                backgroundColor: "#F5F5F5",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#F5F5F5",
+              },
+            },
+          }}
         />
       </div>
 
+      {/* Message Textarea */}
       <TextField
         name="message"
-        label="Your Message"
-        value={form.message}
+        placeholder="Your Message"
+        value={formData.message}
         onChange={handleChange}
         multiline
-        rows={5}
+        rows={8}
         fullWidth
+        variant="filled"
+        InputProps={{
+          disableUnderline: true,
+          style: {
+            backgroundColor: "#F5F5F5",
+            borderRadius: "4px",
+          },
+        }}
+        sx={{
+          mb: 3,
+          "& .MuiFilledInput-root": {
+            backgroundColor: "#F5F5F5",
+            "&:hover": {
+              backgroundColor: "#F5F5F5",
+            },
+            "&.Mui-focused": {
+              backgroundColor: "#F5F5F5",
+            },
+          },
+        }}
       />
 
+      {/* Submit Button */}
       <div className="flex justify-end">
         <Button
           type="submit"
           variant="contained"
-          color="error"
-          className="px-6 py-2"
+          sx={{
+            backgroundColor: "#DB4444",
+            color: "white",
+            padding: "12px 48px",
+            borderRadius: "4px",
+            textTransform: "none",
+            fontSize: "16px",
+            fontWeight: 500,
+            "&:hover": {
+              backgroundColor: "#C23333",
+            },
+          }}
         >
           Send Message
         </Button>

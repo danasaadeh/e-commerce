@@ -4,7 +4,7 @@ const ContactPage = lazy(() => import("../pages/index"));
 
 export const contactRoutes = [
   {
-    path: "/about",
+    path: "/contact",
     element: <ContactPage />,
   },
 ];
