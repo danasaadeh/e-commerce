@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
 
         {/* Nav Links */}
         <nav className="hidden md:flex space-x-8 text-sm font-medium">
-          <Link to="/" className="hover:underline">
+          <Link to={appRoutes.home} className="hover:underline">
             Home
           </Link>
           <Link to={appRoutes.contact} className="hover:underline">

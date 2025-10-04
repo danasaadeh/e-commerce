@@ -5,6 +5,7 @@ import { authRoutes } from "../features/auth/routes";
 import { aboutRoutes } from "../features/about/routes";
 import Contact from "../features/contact/pages";
 import { contactRoutes } from "../features/contact/routes";
+import { homeRoutes } from "../features/home/routes";
 
 const NotFoundPage = lazy(() => import("../shared/pages/not-found-page"));
 
@@ -21,6 +22,7 @@ const routes = [
       ...authRoutes,
       ...aboutRoutes,
       ...contactRoutes,
+      ...homeRoutes,
 
       {
         path: "*",
