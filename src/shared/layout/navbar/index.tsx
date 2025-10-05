@@ -1,9 +1,8 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AiOutlineSearch,
   AiOutlineHeart,
@@ -11,9 +10,18 @@ import {
 } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 import { appRoutes } from "../../../routes";
+import { useWishlistStore } from "@/features/wish-list/store";
 
 const Navbar: React.FC = () => {
   const [lang, setLang] = useState("English");
+  const navigate = useNavigate();
+
+  // 🧩 Optional: get wishlist count
+  const { wishlist } = useWishlistStore();
+
+  const handleWishlistClick = () => {
+    navigate(appRoutes.wishList || "/wishlist");
+  };
 
   return (
     <header className="w-full">
@@ -36,11 +44,16 @@ const Navbar: React.FC = () => {
       {/* Main Navbar */}
       <div className="bg-white py-4 px-6 max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <h1 className="text-xl font-bold">Exclusive</h1>
+        <h1
+          className="text-xl font-bold cursor-pointer"
+          onClick={() => navigate(appRoutes.home)}
+        >
+          Exclusive
+        </h1>
 
         {/* Nav Links */}
         <nav className="hidden md:flex space-x-8 text-sm font-medium">
-          <Link to={appRoutes.home} className="hover:underline">
+          <Link to={appRoutes.checkout} className="hover:underline">
             Home
           </Link>
           <Link to={appRoutes.contact} className="hover:underline">
@@ -55,7 +68,7 @@ const Navbar: React.FC = () => {
         </nav>
 
         {/* Right Side: Search + Icons */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 relative">
           {/* Search Bar */}
           <div className="relative hidden md:block">
             <input
@@ -69,8 +82,23 @@ const Navbar: React.FC = () => {
             />
           </div>
 
-          {/* Icons */}
-          <AiOutlineHeart className="cursor-pointer" size={22} />
+          {/* ❤️ Wishlist Icon */}
+          <div
+            className="relative cursor-pointer"
+            onClick={handleWishlistClick}
+          >
+            <AiOutlineHeart
+              size={22}
+              className="hover:text-red-500 transition-colors"
+            />
+            {wishlist.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center">
+                {wishlist.length}
+              </span>
+            )}
+          </div>
+
+          {/* 🛒 Cart Icon */}
           <AiOutlineShoppingCart className="cursor-pointer" size={22} />
         </div>
       </div>

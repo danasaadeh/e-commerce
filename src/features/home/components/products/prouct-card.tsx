@@ -14,24 +14,17 @@ import {
   FavoriteBorder,
   Favorite,
   VisibilityOutlined,
+  ShoppingCartOutlined,
+  DeleteOutline,
 } from "@mui/icons-material";
+import { Product } from "../../types";
+import { useWishlistStore } from "@/features/wish-list/store";
 
-interface ProductCardProps {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  rating: number;
-  reviewCount: number;
-  badge?: {
-    text: string;
-    type: "sale" | "new";
-  };
-  colors?: string[];
+interface ProductCardProps extends Product {
   onAddToCart?: (id: string) => void;
-  onToggleWishlist?: (id: string) => void;
+  onToggleWishlist?: (product: Product) => void;
   onQuickView?: (id: string) => void;
+  wishlistMode?: boolean;
 }
 
 export default function ProductCard({
@@ -47,23 +40,38 @@ export default function ProductCard({
   onAddToCart,
   onToggleWishlist,
   onQuickView,
+  wishlistMode = false,
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [selectedColor, setSelectedColor] = useState(colors?.[0]);
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isHeartHovered, setIsHeartHovered] = useState(false);
+  const [isEyeHovered, setIsEyeHovered] = useState(false);
+
+  const { wishlist } = useWishlistStore(); // ✅ access global wishlist
+  const isWishlisted = wishlist.some((item) => item.id === id); // ✅ derive state globally
+
+  const productData: Product = {
+    id,
+    name,
+    price,
+    originalPrice,
+    image,
+    rating,
+    reviewCount,
+    badge,
+    colors,
+  };
 
   const handleWishlistClick = () => {
-    setIsWishlisted(!isWishlisted);
-    onToggleWishlist?.(id);
+    onToggleWishlist?.(productData);
   };
 
-  const handleQuickView = () => {
-    onQuickView?.(id);
+  const handleDeleteFromWishlist = () => {
+    onToggleWishlist?.(productData);
   };
 
-  const handleAddToCart = () => {
-    onAddToCart?.(id);
-  };
+  const handleAddToCart = () => onAddToCart?.(id);
+  const handleQuickView = () => onQuickView?.(id);
 
   const discountPercentage = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
@@ -71,129 +79,142 @@ export default function ProductCard({
 
   return (
     <Card
-      className="relative overflow-hidden"
+      className="relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       sx={{
-        width: 300,
+        maxWidth: 270,
         height: 350,
-        borderRadius: 2,
+        borderRadius: 1,
         boxShadow: "none",
         border: "none",
-        "&:hover .hoverOverlay": { opacity: 1, bottom: 0 },
+        margin: "0 auto",
       }}
     >
+      {/* 🏷️ Badge */}
       {badge && (
         <Chip
           label={badge.type === "sale" ? `-${discountPercentage}%` : badge.text}
           color={badge.type === "sale" ? "error" : "success"}
           size="small"
           className="absolute top-3 left-3 z-10 font-medium"
-          sx={{ fontSize: 14 }}
+          sx={{ fontSize: 12 }}
         />
       )}
 
+      {/* ❤️ / 🗑 / 👁 Icons */}
       <div className="absolute top-2 right-2 flex flex-col gap-2 z-10">
-        <IconButton
-          size="small"
-          onClick={handleWishlistClick}
-          sx={{
-            bgcolor: "white",
-            width: 42,
-            height: 42,
-            "&:hover": {
-              bgcolor: "#ef4444",
-              color: "white",
-            },
-            color: isWishlisted ? "#ef4444" : "black",
-          }}
-        >
-          {isWishlisted ? (
-            <Favorite fontSize="medium" />
-          ) : (
-            <FavoriteBorder fontSize="medium" />
-          )}
-        </IconButton>
-        <IconButton
-          size="small"
-          onClick={handleQuickView}
-          sx={{
-            bgcolor: "white",
-            width: 42,
-            height: 42,
-            "&:hover": {
-              bgcolor: "#ef4444",
-              color: "white",
-            },
-          }}
-        >
-          <VisibilityOutlined fontSize="medium" />
-        </IconButton>
+        {wishlistMode ? (
+          <IconButton
+            size="small"
+            onClick={handleDeleteFromWishlist}
+            sx={{
+              bgcolor: "white",
+              width: 34,
+              height: 34,
+              "&:hover": { bgcolor: "white" },
+              color: "#ef4444",
+            }}
+          >
+            <DeleteOutline fontSize="small" />
+          </IconButton>
+        ) : (
+          <>
+            <IconButton
+              size="small"
+              onClick={handleWishlistClick}
+              onMouseEnter={() => setIsHeartHovered(true)}
+              onMouseLeave={() => setIsHeartHovered(false)}
+              sx={{
+                bgcolor: "white",
+                width: 34,
+                height: 34,
+                "&:hover": { bgcolor: "white" },
+                color: isWishlisted || isHeartHovered ? "#ef4444" : "black",
+                transition: "color 0.2s ease",
+              }}
+            >
+              {isWishlisted ? (
+                <Favorite fontSize="small" />
+              ) : (
+                <FavoriteBorder fontSize="small" />
+              )}
+            </IconButton>
+
+            <IconButton
+              size="small"
+              onClick={handleQuickView}
+              onMouseEnter={() => setIsEyeHovered(true)}
+              onMouseLeave={() => setIsEyeHovered(false)}
+              sx={{
+                bgcolor: "white",
+                width: 34,
+                height: 34,
+                "&:hover": { bgcolor: "white" },
+                color: isEyeHovered ? "#ef4444" : "black",
+                transition: "color 0.2s ease",
+              }}
+            >
+              <VisibilityOutlined fontSize="small" />
+            </IconButton>
+          </>
+        )}
       </div>
 
+      {/* 🖼️ Product Image + Add to Cart hover */}
       <div
-        className="relative bg-gray-50 flex items-center justify-center"
-        style={{ height: 220 }}
+        className="relative bg-gray-50 flex items-center justify-center overflow-hidden"
+        style={{ height: 200 }}
       >
         <CardMedia
           component="img"
           image={image || "/placeholder.svg"}
           alt={name}
           sx={{
-            height: 180,
+            height: 160,
             objectFit: "contain",
             mx: "auto",
           }}
         />
 
-        <div
-          className="hoverOverlay"
-          style={{
+        <Button
+          fullWidth
+          onClick={handleAddToCart}
+          startIcon={<ShoppingCartOutlined />}
+          sx={{
             position: "absolute",
-            bottom: isHovered ? "0" : "-100%",
+            bottom: isHovered ? 0 : "-100%",
             left: 0,
             width: "100%",
-            backgroundColor: "black",
+            bgcolor: "black",
             color: "white",
-            textAlign: "center",
-            transition: "all 0.3s ease",
-            opacity: isHovered ? 1 : 0,
+            fontSize: 16,
+            fontWeight: 500,
+            height: 41,
+            borderRadius: 0,
+            textTransform: "none",
+            transition: "bottom 0.3s ease",
+            "&:hover": { bgcolor: "#222" },
           }}
         >
-          <Button
-            fullWidth
-            onClick={handleAddToCart}
-            sx={{
-              bgcolor: "black",
-              color: "white",
-              fontSize: 16,
-              fontWeight: 500,
-              height: 44,
-              borderRadius: 0,
-              textTransform: "none",
-              "&:hover": {
-                bgcolor: "#222",
-              },
-            }}
-          >
-            Add To Cart
-          </Button>
-        </div>
+          Add To Cart
+        </Button>
       </div>
 
-      <CardContent sx={{ p: 2, textAlign: "left" }}>
+      {/* 📝 Product Details */}
+      <CardContent sx={{ p: 2, pb: 2, textAlign: "left" }}>
         <Typography
           variant="body2"
-          className="font-semibold mb-2 line-clamp-1"
+          className="font-medium mb-2 line-clamp-1"
           sx={{ fontSize: 16 }}
         >
           {name}
         </Typography>
 
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-3 mb-2">
           <Typography
             variant="subtitle1"
-            className="text-red-500 font-semibold"
+            className="text-red-500 font-medium"
             sx={{ fontSize: 16 }}
           >
             ${price}
@@ -202,13 +223,14 @@ export default function ProductCard({
             <Typography
               variant="body2"
               className="line-through text-gray-400"
-              sx={{ fontSize: 14 }}
+              sx={{ fontSize: 16, opacity: 0.5 }}
             >
               ${originalPrice}
             </Typography>
           )}
         </div>
 
+        {/* ⭐ Ratings */}
         <div className="flex items-center gap-2 mb-2">
           <div className="flex items-center">
             {[...Array(5)].map((_, index) => (
@@ -230,12 +252,13 @@ export default function ProductCard({
           <Typography
             variant="caption"
             className="text-gray-500"
-            sx={{ fontSize: 14 }}
+            sx={{ fontSize: 14, fontWeight: 600 }}
           >
             ({reviewCount})
           </Typography>
         </div>
 
+        {/* 🎨 Color Options */}
         {colors && colors.length > 0 && (
           <div className="flex items-center gap-2">
             {colors.map((color, index) => (

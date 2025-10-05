@@ -6,6 +6,10 @@ import { aboutRoutes } from "../features/about/routes";
 import Contact from "../features/contact/pages";
 import { contactRoutes } from "../features/contact/routes";
 import { homeRoutes } from "../features/home/routes";
+import { wishListRoutes } from "@/features/wish-list/routes";
+import { cartRoutes } from "@/features/cart/routes";
+import { checkoutRoutes } from "@/features/checkout/routes";
+import { productDetailsRoutes } from "@/features/product-details/routes";
 
 const NotFoundPage = lazy(() => import("../shared/pages/not-found-page"));
 
@@ -23,6 +27,10 @@ const routes = [
       ...aboutRoutes,
       ...contactRoutes,
       ...homeRoutes,
+      ...wishListRoutes,
+      ...cartRoutes,
+      ...checkoutRoutes,
+      ...productDetailsRoutes,
 
       {
         path: "*",

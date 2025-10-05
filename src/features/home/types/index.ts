@@ -55,4 +55,15 @@ export const products: Product[] = [
     badge: { text: "Sale", type: "sale" },
     colors: ["#111827", "#2563EB", "#F59E0B"],
   },
+  {
+    id: "5",
+    name: "Smart Watch Series 7",
+    price: 399,
+    originalPrice: 450,
+    image: "src/assets/images/home/jacket.png",
+    rating: 4,
+    reviewCount: 50,
+    badge: { text: "Sale", type: "sale" },
+    colors: ["#111827", "#2563EB", "#F59E0B"],
+  },
 ];
