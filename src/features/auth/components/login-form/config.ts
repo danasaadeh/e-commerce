@@ -4,11 +4,12 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const phoneRegex = /^(\+?\d{1,3}[- ]?)?\d{10}$/;
 
+const isDev = import.meta.env.MODE === "development";
 const strongPasswordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 export const loginFormSchemaValidation = yup.object({
-  emailOrPhone: yup
+  email: yup
     .string()
     .trim()
     .required("Email or phone number is required")
@@ -24,9 +25,13 @@ export const loginFormSchemaValidation = yup.object({
   password: yup
     .string()
     .required("Password is required")
-    .matches(
-      strongPasswordRegex,
-      "Password must contain at least 8 characters, including one uppercase, one lowercase, one number, and one special character."
+    .test(
+      "password-strength",
+      "Password must be strong (8+ chars, uppercase, lowercase, number, special char).",
+      (value) => {
+        if (!value) return false;
+        return isDev ? true : strongPasswordRegex.test(value);
+      }
     )
     .max(20, "Password cannot exceed 20 characters"),
 });

@@ -1,7 +1,11 @@
+// config.ts
 import * as yup from "yup";
 
-const nameRegex = /^[A-Za-z\s]{3,20}$/; // letters & spaces only
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const isDev = import.meta.env.MODE === "development";
+
+const nameRegex = /^[A-Za-z\s]{3,20}$/;
+const emailOrPhoneRegex =
+  /^((\+?\d{1,3}[- ]?)?\d{10}$)|(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 const strongPasswordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -18,20 +22,19 @@ export const signUpFormSchemaValidation = yup.object({
   email: yup
     .string()
     .trim()
-    .required("Email is required")
-    .matches(emailRegex, "Please enter a valid email address"),
+    .required("Email or phone number is required")
+    .matches(emailOrPhoneRegex, "Enter a valid email or phone number"),
 
   password: yup
     .string()
     .required("Password is required")
-    .matches(
-      strongPasswordRegex,
-      "Password must contain at least 8 characters, including one uppercase, one lowercase, one number, and one special character."
+    .test(
+      "password-strength",
+      "Password must be strong (8+ chars, uppercase, lowercase, number, special char).",
+      (value) => {
+        if (!value) return false;
+        return isDev ? true : strongPasswordRegex.test(value);
+      }
     )
     .max(20, "Password cannot exceed 20 characters"),
-
-  confirmPassword: yup
-    .string()
-    .required("Please confirm your password")
-    .oneOf([yup.ref("password")], "Passwords must match"),
 });

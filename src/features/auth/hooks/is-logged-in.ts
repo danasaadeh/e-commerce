@@ -1,6 +1,6 @@
-import { useGetMeQuery } from "../services/queries";
+import { useUserProfile } from "../services/queries";
 
 export function useIsLoggedIn() {
-  const { data: user, isLoading } = useGetMeQuery();
+  const { data: user, isLoading } = useUserProfile();
   return { isLoggedIn: Boolean(user), isLoading };
 }

@@ -1,14 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
-import AuthServices from "./api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import authServices from "../services/api";
 
-export function useSignUpMutation() {
-  return useMutation({
-    mutationFn: async (payload) => await AuthServices.signUp(payload),
+export const useLoginMutation = () =>
+  useMutation({
+    mutationFn: (data: { email: string; password: string }) =>
+      authServices.signUp(data),
   });
-}
 
-export function useLoginMutation() {
-  return useMutation({
-    mutationFn: async (payload) => await AuthServices.login(payload),
+export const useSignUpMutation = () =>
+  useMutation({
+    mutationFn: (data: { email: string; password: string }) =>
+      authServices.signUp(data),
   });
-}

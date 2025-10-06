@@ -1,67 +1,52 @@
 import { httpClient } from "../../../lib/axios";
 import { userStorage } from "../storage";
-import { generateJWT } from "../../../shared/utilities/jwt";
 
 class AuthServices {
-  #endPoint = "/users";
+  #endPoint = "/auth";
 
-  async getUserByEmail(email) {
-    const response = await httpClient.get(`${this.#endPoint}?email=${email}`);
-    if (
-      response.data &&
-      Array.isArray(response.data) &&
-      response.data.length > 0
-    ) {
-      return response.data[0];
+  async login(payload: AuthPayload): Promise<AuthResponse> {
+    try {
+      const response = await httpClient.post<AuthResponse>(
+        "https://api.escuelajs.co/api/v1/auth/login",
+        payload
+      );
+
+      const { access_token, refresh_token } = response.data;
+
+      // Save token for future requests
+      userStorage.set(access_token);
+
+      return { access_token, refresh_token };
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        throw new Error("Invalid email or password.");
+      } else if (error.response?.status === 400) {
+        throw new Error("Malformed request. Please check your input.");
+      } else {
+        throw new Error("An unexpected error occurred. Please try again.");
+      }
     }
-    return null;
   }
 
-  async signUp(payload) {
+  async signUp(payload: AuthPayload): Promise<AuthResponse> {
+    // For now, signUp just reuses login endpoint
+    return this.login(payload);
+  }
+
+  async getMe(): Promise<UserProfile | null> {
     try {
-      const userResponse = await this.getUserByEmail(payload.email);
-      if (userResponse) {
-        return userResponse;
-      }
-      const token = await generateJWT({ email: payload.email, role: "admin" });
-      const response = await httpClient.post(this.#endPoint, {
-        ...payload,
-        token,
-      });
+      const response = await httpClient.get<UserProfile>(
+        `${this.#endPoint}/profile`
+      );
       return response.data;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
-
-  async login(payload) {
-    try {
-      const userResponse = await this.getUserByEmail(payload.email);
-      if (!userResponse) {
-        throw new Error("User not found");
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        throw new Error("Unauthorized — please login again.");
+      } else if (error.response?.status === 403) {
+        throw new Error("Forbidden — you don’t have permission.");
       }
-      if (userResponse.password !== payload.password) {
-        throw new Error("Invalid password or email");
-      }
-      return userResponse;
-    } catch (e) {
-      throw new Error(e);
+      throw new Error("Failed to retrieve user profile.");
     }
-  }
-
-  async getMe() {
-    const token = userStorage.get();
-    const response = await httpClient.get(`${this.#endPoint}?token=${token}`);
-
-    if (
-      response.data &&
-      Array.isArray(response.data) &&
-      response.data.length > 0
-    ) {
-      return response.data[0];
-    }
-
-    return null;
   }
 }
 
