@@ -3,16 +3,12 @@ import { Link as RouterLink } from "react-router-dom";
 
 const ProductBreadcrumb = () => {
   return (
-    <Breadcrumbs
-      aria-label="breadcrumb"
-      separator="/"
-      className="text-sm text-gray-500"
-    >
+    <Breadcrumbs aria-label="breadcrumb" separator="/" className="text-sm mb-6">
       <MuiLink
         component={RouterLink}
         to="/account"
         underline="hover"
-        color="inherit"
+        className="text-gray-600 hover:text-gray-900"
       >
         Account
       </MuiLink>
@@ -20,11 +16,11 @@ const ProductBreadcrumb = () => {
         component={RouterLink}
         to="/gaming"
         underline="hover"
-        color="inherit"
+        className="text-gray-600 hover:text-gray-900"
       >
         Gaming
       </MuiLink>
-      <Typography color="textPrimary" className="font-medium text-gray-800">
+      <Typography className="font-medium text-gray-900">
         Havic HV G-92 Gamepad
       </Typography>
     </Breadcrumbs>

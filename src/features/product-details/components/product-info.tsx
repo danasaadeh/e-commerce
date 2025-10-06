@@ -1,4 +1,5 @@
-import { Box, Typography, Rating, Chip } from "@mui/material";
+import type React from "react";
+import { Box, Typography, Rating, Chip, Divider } from "@mui/material";
 import ProductActions from "./product-actions";
 
 interface Product {
@@ -18,32 +19,34 @@ interface ProductInfoProps {
 
 const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   return (
-    <Box className="space-y-4">
-      <Typography variant="h5" className="font-semibold text-gray-800">
+    <Box className="space-y-5">
+      <Typography variant="h4" className="font-semibold text-gray-900">
         {product.name}
       </Typography>
 
-      <Box className="flex items-center gap-2">
+      <Box className="flex items-center gap-3">
         <Rating value={product.rating} precision={0.5} readOnly size="small" />
         <Typography variant="body2" className="text-gray-500">
           ({product.reviews} Reviews)
         </Typography>
+        <Box className="w-px h-4 bg-gray-300" />
         <Chip
           label={product.inStock ? "In Stock" : "Out of Stock"}
           color={product.inStock ? "success" : "default"}
           size="small"
+          className="font-medium"
         />
       </Box>
 
-      <Typography variant="h6" className="text-gray-800 font-semibold">
+      <Typography variant="h5" className="text-gray-900 font-semibold">
         ${product.price.toFixed(2)}
       </Typography>
 
-      <Typography variant="body2" className="text-gray-600 leading-relaxed">
+      <Typography variant="body2" className="text-gray-700 leading-relaxed">
         {product.description}
       </Typography>
 
-      <hr />
+      <Divider className="!my-5" />
 
       <ProductActions colors={product.colors} sizes={product.sizes} />
     </Box>

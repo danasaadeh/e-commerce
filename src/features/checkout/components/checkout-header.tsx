@@ -60,11 +60,6 @@ const CheckoutHeader: React.FC = () => {
           CheckOut
         </Typography>
       </Breadcrumbs>
-
-      {/* Title */}
-      <Typography variant="h5" className="font-semibold text-gray-800 mt-3">
-        Billing Details
-      </Typography>
     </Box>
   );
 };

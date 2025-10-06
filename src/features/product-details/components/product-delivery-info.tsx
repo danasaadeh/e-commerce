@@ -1,30 +1,51 @@
-import { Box, Typography, Link } from "@mui/material";
+import { Box, Typography, Link, Divider } from "@mui/material";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 
 const ProductDeliveryInfo = () => {
   return (
-    <Box className="mt-8 space-y-4">
-      <Box className="flex items-start gap-3">
-        <LocalShippingOutlinedIcon color="error" />
-        <Box>
-          <Typography variant="body1" className="font-medium">
+    <Box className="mt-8 border-2 border-gray-300 rounded-md overflow-hidden">
+      {/* Free Delivery */}
+      <Box className="flex items-start gap-4 p-5">
+        <LocalShippingOutlinedIcon className="text-gray-700 mt-1" />
+        <Box className="flex-1">
+          <Typography
+            variant="body1"
+            className="font-semibold text-gray-900 mb-1"
+          >
             Free Delivery
           </Typography>
-          <Link href="#" underline="hover" color="error">
+          <Link
+            href="#"
+            underline="always"
+            className="text-sm text-gray-700 hover:text-gray-900"
+          >
             Enter your postal code for Delivery Availability
           </Link>
         </Box>
       </Box>
 
-      <Box className="flex items-start gap-3">
-        <AutorenewOutlinedIcon color="error" />
-        <Box>
-          <Typography variant="body1" className="font-medium">
+      <Divider />
+
+      {/* Return Delivery */}
+      <Box className="flex items-start gap-4 p-5">
+        <AutorenewOutlinedIcon className="text-gray-700 mt-1" />
+        <Box className="flex-1">
+          <Typography
+            variant="body1"
+            className="font-semibold text-gray-900 mb-1"
+          >
             Return Delivery
           </Typography>
-          <Typography variant="body2" className="text-gray-500">
-            Free 30 Days Delivery Returns. Details
+          <Typography variant="body2" className="text-gray-700">
+            Free 30 Days Delivery Returns.{" "}
+            <Link
+              href="#"
+              underline="always"
+              className="text-gray-700 hover:text-gray-900"
+            >
+              Details
+            </Link>
           </Typography>
         </Box>
       </Box>

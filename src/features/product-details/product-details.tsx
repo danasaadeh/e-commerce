@@ -1,4 +1,4 @@
-import { Container, Grid, Box } from "@mui/material";
+import { Container } from "@mui/material";
 import ProductBreadcrumb from "./components/product-breadcrumb";
 import ProductDeliveryInfo from "./components/product-delivery-info";
 import ProductImages from "./components/product-images";
@@ -8,7 +8,7 @@ const ProductDetails = () => {
   const product = {
     id: 1,
     name: "Havic HV G-92 Gamepad",
-    price: 192,
+    price: 192.0,
     rating: 4.5,
     reviews: 150,
     inStock: true,
@@ -26,21 +26,21 @@ const ProductDetails = () => {
   };
 
   return (
-    <Container maxWidth="lg" className="py-10">
+    <Container maxWidth="lg" className="py-8">
       <ProductBreadcrumb />
 
-      <Grid container spacing={6} className="mt-6">
-        {/* Left: Images */}
-        <Grid item xs={12} md={6}>
+      <div className="flex gap-6 mt-8">
+        {/* Images section (thumbnails + main image) */}
+        <div className="flex-[0_0_55%]">
           <ProductImages images={product.images} />
-        </Grid>
+        </div>
 
-        {/* Right: Product Info */}
-        <Grid item xs={12} md={6}>
+        {/* Product Info section */}
+        <div className="flex-1">
           <ProductInfo product={product} />
           <ProductDeliveryInfo />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </Container>
   );
 };

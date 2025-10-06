@@ -1,6 +1,6 @@
 import {
   Box,
-  TextField,
+  OutlinedInput,
   Checkbox,
   FormControlLabel,
   Typography,
@@ -16,139 +16,188 @@ const BillingForm = () => {
 
       {/* Form Fields */}
       <Box className="flex flex-col gap-6">
-        <TextField
-          fullWidth
-          label="First Name *"
-          variant="outlined"
-          size="medium"
-          InputProps={{
-            style: {
-              borderRadius: "8px",
-              backgroundColor: "#fff",
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: "#888",
-              fontSize: "14px",
-            },
-          }}
-        />
+        <Box>
+          <Typography variant="body2" className="!text-gray-600 !mb-2">
+            First Name*
+          </Typography>
+          <OutlinedInput
+            fullWidth
+            placeholder=""
+            sx={{
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+              "& fieldset": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BDBDBD",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#DB4444",
+              },
+              "& input": {
+                padding: "12px 14px",
+              },
+            }}
+          />
+        </Box>
 
-        <TextField
-          fullWidth
-          label="Company Name"
-          variant="outlined"
-          size="medium"
-          InputProps={{
-            style: {
-              borderRadius: "8px",
-              backgroundColor: "#fff",
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: "#888",
-              fontSize: "14px",
-            },
-          }}
-        />
+        <Box>
+          <Typography variant="body2" className="!text-gray-600 !mb-2">
+            Company Name
+          </Typography>
+          <OutlinedInput
+            fullWidth
+            placeholder=""
+            sx={{
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+              "& fieldset": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BDBDBD",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#DB4444",
+              },
+              "& input": {
+                padding: "12px 14px",
+              },
+            }}
+          />
+        </Box>
 
-        <TextField
-          fullWidth
-          label="Street Address *"
-          variant="outlined"
-          size="medium"
-          InputProps={{
-            style: {
-              borderRadius: "8px",
-              backgroundColor: "#fff",
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: "#888",
-              fontSize: "14px",
-            },
-          }}
-        />
+        <Box>
+          <Typography variant="body2" className="!text-gray-600 !mb-2">
+            Street Address*
+          </Typography>
+          <OutlinedInput
+            fullWidth
+            placeholder=""
+            sx={{
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+              "& fieldset": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BDBDBD",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#DB4444",
+              },
+              "& input": {
+                padding: "12px 14px",
+              },
+            }}
+          />
+        </Box>
 
-        <TextField
-          fullWidth
-          label="Apartment, floor, etc. (optional)"
-          variant="outlined"
-          size="medium"
-          InputProps={{
-            style: {
-              borderRadius: "8px",
-              backgroundColor: "#fff",
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: "#888",
-              fontSize: "14px",
-            },
-          }}
-        />
+        <Box>
+          <Typography variant="body2" className="!text-gray-600 !mb-2">
+            Apartment, floor, etc. (optional)
+          </Typography>
+          <OutlinedInput
+            fullWidth
+            placeholder=""
+            sx={{
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+              "& fieldset": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BDBDBD",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#DB4444",
+              },
+              "& input": {
+                padding: "12px 14px",
+              },
+            }}
+          />
+        </Box>
 
-        <TextField
-          fullWidth
-          label="Town / City *"
-          variant="outlined"
-          size="medium"
-          InputProps={{
-            style: {
-              borderRadius: "8px",
-              backgroundColor: "#fff",
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: "#888",
-              fontSize: "14px",
-            },
-          }}
-        />
+        <Box>
+          <Typography variant="body2" className="!text-gray-600 !mb-2">
+            Town/City*
+          </Typography>
+          <OutlinedInput
+            fullWidth
+            placeholder=""
+            sx={{
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+              "& fieldset": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BDBDBD",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#DB4444",
+              },
+              "& input": {
+                padding: "12px 14px",
+              },
+            }}
+          />
+        </Box>
 
-        <TextField
-          fullWidth
-          label="Phone Number *"
-          variant="outlined"
-          size="medium"
-          InputProps={{
-            style: {
-              borderRadius: "8px",
-              backgroundColor: "#fff",
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: "#888",
-              fontSize: "14px",
-            },
-          }}
-        />
+        <Box>
+          <Typography variant="body2" className="!text-gray-600 !mb-2">
+            Phone Number*
+          </Typography>
+          <OutlinedInput
+            fullWidth
+            placeholder=""
+            sx={{
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+              "& fieldset": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BDBDBD",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#DB4444",
+              },
+              "& input": {
+                padding: "12px 14px",
+              },
+            }}
+          />
+        </Box>
 
-        <TextField
-          fullWidth
-          label="Email Address *"
-          variant="outlined"
-          size="medium"
-          type="email"
-          InputProps={{
-            style: {
-              borderRadius: "8px",
-              backgroundColor: "#fff",
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: "#888",
-              fontSize: "14px",
-            },
-          }}
-        />
+        <Box>
+          <Typography variant="body2" className="!text-gray-600 !mb-2">
+            Email Address*
+          </Typography>
+          <OutlinedInput
+            fullWidth
+            placeholder=""
+            type="email"
+            sx={{
+              backgroundColor: "#F5F5F5",
+              borderRadius: "4px",
+              "& fieldset": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BDBDBD",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#DB4444",
+              },
+              "& input": {
+                padding: "12px 14px",
+              },
+            }}
+          />
+        </Box>
 
         {/* Save Info Checkbox */}
         <FormControlLabel
