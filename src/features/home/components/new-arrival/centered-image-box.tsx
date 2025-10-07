@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { Box, Typography } from "@mui/material";
 
 interface CenteredImageBoxProps {
@@ -6,7 +6,7 @@ interface CenteredImageBoxProps {
   alt: string;
   title: string;
   subtitle?: string;
-  height: number | { xs: number; md: number };
+  height: number | string | { xs: number | string; md: number | string };
   isGlow?: boolean;
   shopLink?: string;
 }
