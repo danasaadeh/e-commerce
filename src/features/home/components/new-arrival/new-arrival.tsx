@@ -1,10 +1,5 @@
-import React from "react";
-import {
-  Box,
-  Grid,
-  useMediaQuery,
-  useTheme as useMuiTheme,
-} from "@mui/material";
+import type React from "react";
+import { Box, useMediaQuery, useTheme as useMuiTheme } from "@mui/material";
 import CenteredImageBox from "./centered-image-box";
 import NewArrivalHeader from "./new-arrival-header";
 
@@ -16,14 +11,14 @@ import perfumeImg from "@/assets/images/home/hero-sections/perfume.png";
 
 const NewArrival: React.FC = () => {
   const muiTheme = useMuiTheme();
-  const isMobile = useMediaQuery(muiTheme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
 
   return (
     <Box
       sx={{
         mt: 8,
         mb: 8,
-        px: isMobile ? 2 : 8,
+        px: { xs: 2, md: 4 },
         py: 4,
         width: "100%",
         maxWidth: "1400px",
@@ -33,16 +28,17 @@ const NewArrival: React.FC = () => {
       {/* Header */}
       <NewArrivalHeader />
 
-      {/* Layout Grid */}
-      <Grid
-        container
-        spacing={3}
-        justifyContent="center"
-        alignItems="stretch"
-        sx={{ mt: 2 }}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          gap: 3,
+          mt: 4,
+          minHeight: { xs: "auto", md: 600 },
+        }}
       >
         {/* LEFT SIDE — PS5 */}
-        <Grid item xs={12} md={6}>
+        <Box>
           <CenteredImageBox
             src={ps5Img}
             alt="PlayStation 5"
@@ -51,52 +47,59 @@ const NewArrival: React.FC = () => {
             height={{ xs: 300, md: 600 }}
             shopLink="/shop/ps5"
           />
-        </Grid>
+        </Box>
 
         {/* RIGHT SIDE — 3 stacked blocks */}
-        <Grid item xs={12} md={6}>
-          <Grid container spacing={3} direction="column">
-            {/* Woman */}
-            <Grid item>
-              <CenteredImageBox
-                src={womanImg}
-                alt="Women’s Collections"
-                title="Women’s Collections"
-                subtitle="Featured woman collections that give you another vibe."
-                height={{ xs: 200, md: 290 }}
-                shopLink="/shop/women"
-              />
-            </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            height: { xs: "auto", md: 600 },
+          }}
+        >
+          {/* Woman's Collection - Takes up top half */}
+          <Box sx={{ flex: 1, minHeight: 0 }}>
+            <CenteredImageBox
+              src={womanImg}
+              alt="Women's Collections"
+              title="Women's Collections"
+              subtitle="Featured woman collections that give you another vibe."
+              height="100%"
+              shopLink="/shop/women"
+            />
+          </Box>
 
-            {/* Speakers + Perfume */}
-            <Grid item>
-              <Grid container spacing={3}>
-                <Grid item xs={6}>
-                  <CenteredImageBox
-                    src={speakersImg}
-                    alt="Speakers"
-                    title="Speakers"
-                    subtitle="Amazon wireless speakers"
-                    height={{ xs: 180, md: 284 }}
-                    shopLink="/shop/speakers"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <CenteredImageBox
-                    src={perfumeImg}
-                    alt="Perfume"
-                    title="Perfume"
-                    subtitle="GUCCI INTENSE OUD EDP"
-                    height={{ xs: 180, md: 284 }}
-                    isGlow
-                    shopLink="/shop/perfume"
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+          {/* Speakers + Perfume - Bottom row side by side */}
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 3,
+              flex: 1,
+              minHeight: 0,
+            }}
+          >
+            <CenteredImageBox
+              src={speakersImg}
+              alt="Speakers"
+              title="Speakers"
+              subtitle="Amazon wireless speakers"
+              height="100%"
+              shopLink="/shop/speakers"
+            />
+            <CenteredImageBox
+              src={perfumeImg}
+              alt="Perfume"
+              title="Perfume"
+              subtitle="GUCCI INTENSE OUD EDP"
+              height="100%"
+              isGlow
+              shopLink="/shop/perfume"
+            />
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };
