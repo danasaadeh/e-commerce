@@ -1,36 +1,8 @@
 import axios from "axios";
-// import { logoutHelper } from "../../features/auth/utilities/auth";
-import { userStorage } from "../../features/auth/storage/index";
-// import { toast } from "react-toastify";
-
-// const statusesConfig = {
-//   401: {
-//     message: "You are not authorized to access this resource",
-//     action: function () {
-//       toast.error(this.message);
-//       logoutHelper();
-//       window.location.reload();
-//     },
-//   },
-//   403: {
-//     message: "You do not have permission to access this resource",
-//     action: function () {
-//       toast.error(this.message);
-//     },
-//   },
-//   404: {
-//     message: "The requested resource was not found",
-//     action: function () {
-//       toast.error(this.message);
-//     },
-//   },
-//   500: {
-//     message: "An internal server error occurred",
-//     action: function () {
-//       toast.error(this.message);
-//     },
-//   },
-// };
+import { userStorage } from "../../features/auth/storage";
+import { handleApiError } from "./axios-error-handler";
+import { logoutHelper } from "../../features/auth/utilities/auth";
+import { appRoutes } from "@/routes";
 
 export const httpClient = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -44,17 +16,18 @@ httpClient.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 httpClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    //  statusesConfig[error.response?.status]?.action?.();
-    return Promise.reject(error);
+    // ✅ Automatically logout on unauthorized error
+    if (error.response?.status === 401) {
+      // logoutHelper();
+    }
+
+    // Handle the rest of the errors
+    handleApiError(error);
   }
 );

@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AiOutlineSearch,
@@ -9,19 +9,41 @@ import {
   AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
+import { FiUser } from "react-icons/fi";
 import { appRoutes } from "../../../routes";
 import { useWishlistStore } from "@/features/wish-list/store";
+import { useIsLoggedIn } from "@/features/auth/hooks/is-logged-in";
+import { logoutHelper } from "@/features/auth/utilities/auth";
+import ProfileDropdown from "@/shared/components/profile-drop-down/index";
 
 const Navbar: React.FC = () => {
   const [lang, setLang] = useState("English");
+  const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
-  // 🧩 Optional: get wishlist count
   const { wishlist } = useWishlistStore();
+  const { isLoggedIn } = useIsLoggedIn();
 
   const handleWishlistClick = () => {
     navigate(appRoutes.wishList || "/wishlist");
   };
+
+  const handleProfileClick = () => {
+    navigate(appRoutes.home || "/profile");
+    setShowMenu(false);
+  };
+
+  // ✅ Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".profile-menu")) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   return (
     <header className="w-full">
@@ -42,7 +64,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Main Navbar */}
-      <div className="bg-white py-4 px-6 max-w-7xl mx-auto flex items-center justify-between">
+      <div className="bg-white py-4 px-6 max-w-7xl mx-auto flex items-center justify-between relative">
         {/* Logo */}
         <h1
           className="text-xl font-bold cursor-pointer"
@@ -62,14 +84,16 @@ const Navbar: React.FC = () => {
           <Link to={appRoutes.about} className="hover:underline">
             About
           </Link>
-          <Link to={appRoutes.auth.signUp} className="hover:underline">
-            Sign Up
-          </Link>
+          {!isLoggedIn && (
+            <Link to={appRoutes.auth.signUp} className="hover:underline">
+              Sign Up
+            </Link>
+          )}
         </nav>
 
         {/* Right Side: Search + Icons */}
         <div className="flex items-center gap-4 relative">
-          {/* Search Bar */}
+          {/* 🔍 Search Bar */}
           <div className="relative hidden md:block">
             <input
               type="text"
@@ -81,7 +105,6 @@ const Navbar: React.FC = () => {
               size={18}
             />
           </div>
-
           {/* ❤️ Wishlist Icon */}
           <div
             className="relative cursor-pointer"
@@ -97,9 +120,31 @@ const Navbar: React.FC = () => {
               </span>
             )}
           </div>
-
           {/* 🛒 Cart Icon */}
-          <AiOutlineShoppingCart className="cursor-pointer" size={22} />
+          <AiOutlineShoppingCart
+            className="cursor-pointer hover:text-blue-500 transition-colors"
+            size={22}
+          />
+
+          {isLoggedIn && (
+            <div className="relative profile-menu">
+              <button
+                onClick={() => setShowMenu((prev) => !prev)}
+                className="cursor-pointer focus:outline-none"
+              >
+                <FiUser
+                  size={22}
+                  className={`transition-colors ${
+                    showMenu ? "text-blue-500" : "hover:text-blue-500"
+                  }`}
+                />
+              </button>
+
+              {showMenu && (
+                <ProfileDropdown onClose={() => setShowMenu(false)} />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </header>

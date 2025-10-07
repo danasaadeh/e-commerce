@@ -1,6 +1,7 @@
+import { appRoutes } from "@/routes";
 import { userStorage } from "../storage";
 
-export function logoutHelper(fallbackUrl = "/login") {
+export function logoutHelper() {
   userStorage.remove();
-  window.location.href = fallbackUrl;
+  window.location.href = appRoutes.auth.login;
 }
