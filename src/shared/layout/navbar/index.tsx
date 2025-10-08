@@ -1,6 +1,6 @@
+// Navbar.tsx
 "use client";
 
-import type React from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -13,33 +13,35 @@ import { FiUser } from "react-icons/fi";
 import { appRoutes } from "../../../routes";
 import { useWishlistStore } from "@/features/wish-list/store";
 import { useIsLoggedIn } from "@/features/auth/hooks/is-logged-in";
-import { logoutHelper } from "@/features/auth/utilities/auth";
-import ProfileDropdown from "@/shared/components/profile-drop-down/index";
+import ProfileDropdown from "@/shared/components/profile-drop-down";
+import SearchDialog from "@/shared/components/search-dialog";
 
 const Navbar: React.FC = () => {
   const [lang, setLang] = useState("English");
   const [showMenu, setShowMenu] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const navigate = useNavigate();
 
   const { wishlist } = useWishlistStore();
   const { isLoggedIn } = useIsLoggedIn();
 
-  const handleWishlistClick = () => {
-    navigate(appRoutes.wishList || "/wishlist");
-  };
+  // ✅ Keyboard shortcut `/` opens search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "/") {
+        e.preventDefault();
+        setOpenSearch(true);
+      }
+      if (e.key === "Escape") setOpenSearch(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
-  const handleProfileClick = () => {
-    navigate(appRoutes.home || "/profile");
-    setShowMenu(false);
-  };
-
-  // ✅ Close profile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (!target.closest(".profile-menu")) {
-        setShowMenu(false);
-      }
+      if (!target.closest(".profile-menu")) setShowMenu(false);
     };
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
@@ -56,7 +58,6 @@ const Navbar: React.FC = () => {
           </Link>
         </p>
 
-        {/* Language Dropdown */}
         <div className="flex items-center cursor-pointer">
           <span>{lang}</span>
           <IoIosArrowDown className="ml-1" size={14} />
@@ -65,7 +66,6 @@ const Navbar: React.FC = () => {
 
       {/* Main Navbar */}
       <div className="bg-white py-4 px-6 max-w-7xl mx-auto flex items-center justify-between relative">
-        {/* Logo */}
         <h1
           className="text-xl font-bold cursor-pointer"
           onClick={() => navigate(appRoutes.home)}
@@ -73,42 +73,39 @@ const Navbar: React.FC = () => {
           Exclusive
         </h1>
 
-        {/* Nav Links */}
         <nav className="hidden md:flex space-x-8 text-sm font-medium">
-          <Link to={appRoutes.home} className="hover:underline">
-            Home
-          </Link>
-          <Link to={appRoutes.contact} className="hover:underline">
-            Contact
-          </Link>
-          <Link to={appRoutes.about} className="hover:underline">
-            About
-          </Link>
-          {!isLoggedIn && (
-            <Link to={appRoutes.auth.signUp} className="hover:underline">
-              Sign Up
-            </Link>
-          )}
+          <Link to={appRoutes.home}>Home</Link>
+          <Link to={appRoutes.cart}>Contact</Link>
+          <Link to={appRoutes.about}>About</Link>
+          {!isLoggedIn && <Link to={appRoutes.auth.signUp}>Sign Up</Link>}
         </nav>
 
-        {/* Right Side: Search + Icons */}
         <div className="flex items-center gap-4 relative">
-          {/* 🔍 Search Bar */}
+          {/* 🔍 Search Input */}
           <div className="relative hidden md:block">
             <input
               type="text"
-              placeholder="What are you looking for?"
-              className="border rounded-md py-2 px-4 pr-10 text-sm w-64 focus:outline-none"
+              placeholder="Search products... (Press /)"
+              className="border rounded-md py-2 px-4 pr-10 text-sm w-64 focus:outline-none cursor-pointer"
+              readOnly
+              onClick={() => {
+                if (!openSearch) {
+                  // Delay ensures dialog opens after input loses focus
+                  setTimeout(() => setOpenSearch(true), 100);
+                }
+              }}
             />
             <AiOutlineSearch
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
               size={18}
+              onClick={() => setOpenSearch(true)}
             />
           </div>
-          {/* ❤️ Wishlist Icon */}
+
+          {/* ❤️ Wishlist */}
           <div
             className="relative cursor-pointer"
-            onClick={handleWishlistClick}
+            onClick={() => navigate(appRoutes.wishList || "/wishlist")}
           >
             <AiOutlineHeart
               size={22}
@@ -120,7 +117,8 @@ const Navbar: React.FC = () => {
               </span>
             )}
           </div>
-          {/* 🛒 Cart Icon */}
+
+          {/* 🛒 Cart */}
           <AiOutlineShoppingCart
             className="cursor-pointer hover:text-blue-500 transition-colors"
             size={22}
@@ -147,6 +145,9 @@ const Navbar: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* 🔍 Search Dialog */}
+      <SearchDialog open={openSearch} onClose={() => setOpenSearch(false)} />
     </header>
   );
 };

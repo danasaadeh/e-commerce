@@ -3,6 +3,7 @@ import ProductBreadcrumb from "./components/product-breadcrumb";
 import ProductDeliveryInfo from "./components/product-delivery-info";
 import ProductImages from "./components/product-images";
 import ProductInfo from "./components/product-info";
+import RelatedItems from "./components/related-items/related-items";
 
 const ProductDetails = () => {
   const product = {
@@ -41,6 +42,8 @@ const ProductDetails = () => {
           <ProductDeliveryInfo />
         </div>
       </div>
+
+      <RelatedItems />
     </Container>
   );
 };
