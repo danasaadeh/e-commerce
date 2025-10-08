@@ -5,9 +5,10 @@ export const billingSchema = yup.object({
     .string()
     .required("First name is required")
     .min(2, "Must be at least 2 characters"),
-  companyName: yup.string().nullable(),
+
+  companyName: yup.string().nullable().optional(), // ✅ fix
   streetAddress: yup.string().required("Street address is required"),
-  apartment: yup.string().nullable(),
+  apartment: yup.string().nullable().optional(), // ✅ fix
   city: yup.string().required("Town/City is required"),
   phone: yup
     .string()
@@ -17,12 +18,14 @@ export const billingSchema = yup.object({
     .string()
     .required("Email address is required")
     .email("Invalid email format"),
-  saveInfo: yup.boolean(),
+
+  saveInfo: yup.boolean().optional(), // ✅ fix
 });
 
+// ✅ NEW: Dedicated coupon schema for reuse
 export const couponSchema = yup.object({
   couponCode: yup
     .string()
-    .required("Please enter a coupon code")
-    .min(3, "Code must be at least 3 characters"),
+    .required("Coupon code is required")
+    .matches(/^[A-Z0-9-]*$/, "Coupon code must be alphanumeric"),
 });

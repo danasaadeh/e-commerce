@@ -4,7 +4,7 @@ const ProductDetailsPage = lazy(() => import("../pages/index"));
 
 export const productDetailsRoutes = [
   {
-    path: "/product-details",
+    path: "product/:id",
     element: <ProductDetailsPage />,
   },
 ];

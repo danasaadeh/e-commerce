@@ -7,7 +7,7 @@ export const appRoutes = {
   wishList: "/wishList",
   cart: "/cart",
   checkout: "/checkout",
-  product_details: "/product-details",
+  product_details: "product/:id",
 
   // products: {
   //   list: "/products",

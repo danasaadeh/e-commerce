@@ -1,94 +1,91 @@
 import { Box, Typography, TextField, Button } from "@mui/material";
+import { useFormContext } from "react-hook-form";
 import ProductItem from "./product-item";
 import PaymentMethod from "./paymnet-method";
+import { useCartStore } from "../../cart/store/index"; // ✅ import Zustand store
 
 const OrderTotal = () => {
-  const products = [
-    {
-      id: 1,
-      name: "LCD Monitor",
-      price: 650,
-      image: "src/assets/images/home/play_station_holder.png",
-    },
-    {
-      id: 2,
-      name: "H1 Gamepad",
-      price: 1100,
-      image: "src/assets/images/home/tv.png",
-    },
-  ];
+  const { register, getValues } = useFormContext();
 
-  const subtotal = products.reduce((sum, product) => sum + product.price, 0);
-  const shipping = 0;
-  const total = subtotal + shipping;
+  // ✅ Get cart items and total from Zustand
+  const { items, getTotalPrice } = useCartStore();
+  const subtotal = getTotalPrice();
+
+  // ✅ Handle coupon manually (no Yup validation)
+  const handleApplyCoupon = () => {
+    const code = getValues("couponCode");
+
+    if (!code) {
+      alert("Please enter a coupon code before applying.");
+      return;
+    }
+
+    const pattern = /^[A-Za-z0-9-]{3,20}$/;
+    if (!pattern.test(code)) {
+      alert("Invalid coupon code. Must be 3–20 alphanumeric characters.");
+      return;
+    }
+
+    console.log("✅ Coupon applied:", code);
+    alert(`Coupon "${code}" applied successfully!`);
+  };
 
   return (
     <Box className="w-full">
-      {/* Product Items */}
-      <Box className="divide-y divide-gray-200">
-        {products.map((product) => (
+      {/* ✅ Product List */}
+      {items.length > 0 ? (
+        items.map((p) => (
           <ProductItem
-            key={product.id}
-            image={product.image}
-            name={product.name}
-            price={product.price}
+            key={p.id}
+            image={p.image ?? "src/assets/images/placeholder.png"} // ✅ fallback
+            name={p.name}
+            price={p.price * p.quantity}
           />
-        ))}
-      </Box>
+        ))
+      ) : (
+        <Typography className="text-gray-500 text-center py-6">
+          Your cart is empty.
+        </Typography>
+      )}
 
-      {/* Totals */}
-      <Box className="py-6 space-y-4 border-b border-gray-200">
-        <Box className="flex justify-between items-center">
-          <Typography variant="body2" className="text-gray-700">
-            Subtotal:
-          </Typography>
-          <Typography variant="body2" className="font-medium">
-            ${subtotal}
-          </Typography>
+      {/* ✅ Totals */}
+      <Box className="py-6 border-t border-gray-200 space-y-4">
+        <Box className="flex justify-between">
+          <Typography>Subtotal:</Typography>
+          <Typography>${subtotal.toFixed(2)}</Typography>
         </Box>
-
-        <Box className="flex justify-between items-center">
-          <Typography variant="body2" className="text-gray-700">
-            Shipping:
-          </Typography>
-          <Typography variant="body2" className="font-medium">
-            {shipping === 0 ? "Free" : `$${shipping}`}
-          </Typography>
-        </Box>
-
-        <Box className="flex justify-between items-center pt-2">
-          <Typography variant="body2" className="text-gray-700">
-            Total:
-          </Typography>
-          <Typography variant="body2" className="font-semibold text-lg">
-            ${total}
+        <Box className="flex justify-between pt-2">
+          <Typography>Total:</Typography>
+          <Typography className="font-semibold text-lg">
+            ${subtotal.toFixed(2)}
           </Typography>
         </Box>
       </Box>
 
-      {/* Payment Method */}
+      {/* ✅ Payment Method */}
       <PaymentMethod />
 
-      {/* Coupon Code */}
-      <Box className="flex gap-4 py-6">
+      {/* ✅ Coupon Code Section */}
+      <Box className="flex gap-4 py-6 items-start">
         <TextField
           fullWidth
-          placeholder="Coupon Code"
-          variant="outlined"
-          size="small"
-          className="bg-white"
+          placeholder="Coupon Code (optional)"
+          {...register("couponCode")}
         />
         <Button
+          type="button"
           variant="contained"
           color="error"
+          onClick={handleApplyCoupon}
           className="!capitalize !px-8 whitespace-nowrap"
         >
           Apply Coupon
         </Button>
       </Box>
 
-      {/* Place Order Button */}
+      {/* ✅ Place Order */}
       <Button
+        type="submit"
         variant="contained"
         color="error"
         fullWidth

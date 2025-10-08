@@ -1,11 +1,11 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
   TextField,
   IconButton,
-  Tooltip,
-  Grid,
   InputAdornment,
   CircularProgress,
   useMediaQuery,
@@ -13,17 +13,15 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
+  Grid,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import {
-  AiOutlineClose,
-  AiOutlineHeart,
-  AiOutlineShoppingCart,
-  AiOutlineSearch,
-} from "react-icons/ai";
-import { IoEyeOutline } from "react-icons/io5";
+import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { useDebounce } from "@/shared/hooks/debounce";
 import { useSearchProducts } from "@/features/home/services/queries";
+import ProductCard from "@/features/home/components/products/prouct-card";
+import { useWishlistStore } from "@/features/wish-list/store";
+import { useCartStore } from "@/features/cart/store";
 
 interface SearchDialogProps {
   open: boolean;
@@ -39,6 +37,30 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const suggestions = ["Shoes", "Electronics", "T-Shirts", "Bags", "Laptops"];
+
+  // ✅ Access global stores
+  const { toggleWishlist } = useWishlistStore();
+  const { addToCart } = useCartStore();
+
+  // ✅ Handlers
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+    });
+  };
+
+  const handleToggleWishlist = (product: any) => {
+    toggleWishlist(product);
+  };
+
+  const handleQuickView = (id: string) => {
+    onClose(); // ✅ close dialog first
+    window.location.href = `/product/${id}`;
+  };
 
   // ✅ Close on ESC
   useEffect(() => {
@@ -65,9 +87,8 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
           gap: 2,
         }}
       >
-        {/* Header */}
+        {/* 🔍 Search Header */}
         <div className="flex justify-between items-center mb-2">
-          {/* Search Input */}
           <TextField
             fullWidth
             placeholder="Search by title..."
@@ -82,10 +103,10 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
                   borderColor: "#e0e0e0",
                 },
                 "&:hover fieldset": {
-                  borderColor: "#DB4444", // 🔴 Hover border color
+                  borderColor: "#DB4444",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#DB4444", // 🔴 Focus border color
+                  borderColor: "#DB4444",
                 },
               },
             }}
@@ -105,12 +126,12 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
               ),
             }}
           />
-          <IconButton onClick={onClose} sx={{ color: "#DB4444" }}>
+          <IconButton onClick={onClose} sx={{ color: "#DB4444", ml: 1 }}>
             <AiOutlineClose />
           </IconButton>
         </div>
 
-        {/* 🔍 Suggestions */}
+        {/* 💡 Suggestions */}
         {!debouncedQuery && (
           <div>
             <p className="text-sm text-gray-500 mb-1">Popular Searches</p>
@@ -133,7 +154,7 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
           </div>
         )}
 
-        {/* Results */}
+        {/* 🧩 Search Results */}
         {debouncedQuery && (
           <div className="mt-4">
             {isLoading ? (
@@ -144,49 +165,20 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
               <Grid container spacing={2}>
                 {products.map((p) => (
                   <Grid item xs={12} sm={6} md={4} key={p.id}>
-                    <div
-                      className="border rounded-2xl shadow-sm p-3 flex flex-col justify-between hover:shadow-md transition-all bg-white h-full"
-                      style={{
-                        minHeight: "320px",
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <img
-                        src={p.image}
-                        alt={p.name}
-                        className="w-full object-cover rounded-lg mb-3"
-                        style={{
-                          aspectRatio: "1.2 / 1",
-                          height: "160px",
-                        }}
-                      />
-                      <div className="flex-1 flex flex-col justify-between">
-                        <div>
-                          <h3 className="text-sm font-semibold line-clamp-1">
-                            {p.name}
-                          </h3>
-                          <p className="text-[#DB4444] font-bold">${p.price}</p>
-                        </div>
-                        <div className="flex justify-between items-center mt-2 text-gray-600">
-                          <Tooltip title="Add to Wishlist">
-                            <IconButton size="small">
-                              <AiOutlineHeart />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title="View Product">
-                            <IconButton size="small">
-                              <IoEyeOutline />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title="Add to Cart">
-                            <IconButton size="small">
-                              <AiOutlineShoppingCart />
-                            </IconButton>
-                          </Tooltip>
-                        </div>
-                      </div>
-                    </div>
+                    <ProductCard
+                      id={p.id}
+                      name={p.name}
+                      price={p.price}
+                      originalPrice={p.originalPrice}
+                      image={p.image}
+                      rating={p.rating}
+                      reviewCount={p.reviewCount}
+                      badge={p.badge}
+                      colors={p.colors}
+                      onAddToCart={() => handleAddToCart(p)}
+                      onToggleWishlist={() => handleToggleWishlist(p)}
+                      onQuickView={() => handleQuickView(p.id)}
+                    />
                   </Grid>
                 ))}
               </Grid>

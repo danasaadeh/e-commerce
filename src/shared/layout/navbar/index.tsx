@@ -1,4 +1,3 @@
-// Navbar.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -10,11 +9,31 @@ import {
 } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
+import { Badge, styled } from "@mui/material"; // ✅ styled for custom badge
 import { appRoutes } from "../../../routes";
 import { useWishlistStore } from "@/features/wish-list/store";
 import { useIsLoggedIn } from "@/features/auth/hooks/is-logged-in";
 import ProfileDropdown from "@/shared/components/profile-drop-down";
 import SearchDialog from "@/shared/components/search-dialog";
+import { useCartStore } from "@/features/cart/store";
+
+// ✅ Custom red badge using MUI styled
+const RedBadge = styled(Badge)(() => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#DB4444",
+    color: "white",
+    fontSize: "0.6rem",
+    fontWeight: 600,
+    minWidth: "16px",
+    height: "16px",
+    padding: "0 4px",
+    borderRadius: "50%",
+    transition: "background-color 0.2s ease",
+  },
+  "&:hover .MuiBadge-badge": {
+    backgroundColor: "#b83636", // darker red on hover
+  },
+}));
 
 const Navbar: React.FC = () => {
   const [lang, setLang] = useState("English");
@@ -23,6 +42,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
 
   const { wishlist } = useWishlistStore();
+  const { items } = useCartStore();
   const { isLoggedIn } = useIsLoggedIn();
 
   // ✅ Keyboard shortcut `/` opens search
@@ -38,6 +58,7 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // ✅ Close profile dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -49,7 +70,7 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="w-full">
-      {/* Top Bar */}
+      {/* 🖤 Top Bar */}
       <div className="bg-black text-white text-xs md:text-sm py-2 px-4 flex items-center justify-between">
         <p>
           Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!{" "}
@@ -64,8 +85,9 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* 🧭 Main Navbar */}
       <div className="bg-white py-4 px-6 max-w-7xl mx-auto flex items-center justify-between relative">
+        {/* 🏠 Logo */}
         <h1
           className="text-xl font-bold cursor-pointer"
           onClick={() => navigate(appRoutes.home)}
@@ -73,13 +95,15 @@ const Navbar: React.FC = () => {
           Exclusive
         </h1>
 
+        {/* 🔗 Nav Links */}
         <nav className="hidden md:flex space-x-8 text-sm font-medium">
           <Link to={appRoutes.home}>Home</Link>
-          <Link to={appRoutes.cart}>Contact</Link>
+          <Link to={appRoutes.contact}>Contact</Link>
           <Link to={appRoutes.about}>About</Link>
           {!isLoggedIn && <Link to={appRoutes.auth.signUp}>Sign Up</Link>}
         </nav>
 
+        {/* 🔍 Icons (Right side) */}
         <div className="flex items-center gap-4 relative">
           {/* 🔍 Search Input */}
           <div className="relative hidden md:block">
@@ -90,7 +114,6 @@ const Navbar: React.FC = () => {
               readOnly
               onClick={() => {
                 if (!openSearch) {
-                  // Delay ensures dialog opens after input loses focus
                   setTimeout(() => setOpenSearch(true), 100);
                 }
               }}
@@ -109,21 +132,33 @@ const Navbar: React.FC = () => {
           >
             <AiOutlineHeart
               size={22}
-              className="hover:text-red-500 transition-colors"
+              className="hover:text-[#DB4444] transition-colors"
             />
             {wishlist.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-[#DB4444] text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center">
                 {wishlist.length}
               </span>
             )}
           </div>
 
           {/* 🛒 Cart */}
-          <AiOutlineShoppingCart
-            className="cursor-pointer hover:text-blue-500 transition-colors"
-            size={22}
-          />
+          <div
+            className="relative cursor-pointer"
+            onClick={() => navigate(appRoutes.cart || "/cart")}
+          >
+            <RedBadge
+              badgeContent={items.length}
+              overlap="circular"
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <AiOutlineShoppingCart
+                size={22}
+                className="hover:text-[#DB4444] transition-colors"
+              />
+            </RedBadge>
+          </div>
 
+          {/* 👤 Profile Dropdown */}
           {isLoggedIn && (
             <div className="relative profile-menu">
               <button
@@ -133,7 +168,7 @@ const Navbar: React.FC = () => {
                 <FiUser
                   size={22}
                   className={`transition-colors ${
-                    showMenu ? "text-blue-500" : "hover:text-blue-500"
+                    showMenu ? "text-[#DB4444]" : "hover:text-[#DB4444]"
                   }`}
                 />
               </button>
