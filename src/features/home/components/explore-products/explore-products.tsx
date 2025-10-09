@@ -5,8 +5,9 @@ import ExploreHeader from "./explore-products-header";
 import ProductsList from "../products/products-list";
 import { Product } from "../../types";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-import { useAllProducts } from "../../services/queries"; // ✅ use the same React Query hook
+import { useAllProducts } from "../../services/queries";
 import { useNavigate } from "react-router-dom";
+
 interface ExploreProductsProps {
   onAddToCart?: (id: string) => void;
   onToggleWishlist?: (product: Product) => void;
@@ -18,30 +19,31 @@ export default function ExploreProducts({
   onToggleWishlist,
   onQuickView,
 }: ExploreProductsProps) {
-  // ✅ Fetch data from backend
+  // ✅ Fetch data (just use the default)
   const { data: products, isLoading, isError } = useAllProducts();
 
-  // ✅ Take a slice of products for the explore section
-  const exploreProducts = products?.slice(14, 22) || [];
+  // ✅ Show only the first 4 products
+  const exploreProducts = products?.slice(0, 4) || [];
+
   const navigate = useNavigate();
 
   return (
     <Box className="py-12">
       <ExploreHeader />
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows (optional — can be hooked later) */}
       <Box display="flex" justifyContent="flex-end" mb={3}>
         <div className="flex space-x-3">
-          <button className="cat-prev h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center hover:bg-gray-300 transition">
+          <button className="cat-prev h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center hover:bg-gray-400 transition">
             <KeyboardArrowLeft fontSize="small" />
           </button>
-          <button className="cat-next h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center hover:bg-gray-300 transition">
+          <button className="cat-next h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center hover:bg-gray-400 transition">
             <KeyboardArrowRight fontSize="small" />
           </button>
         </div>
       </Box>
 
-      {/* ✅ Product list handles skeletons internally */}
+      {/* ✅ Product list handles loading skeletons */}
       <ProductsList
         isLoading={isLoading}
         products={isError ? [] : exploreProducts}

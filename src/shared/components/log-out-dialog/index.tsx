@@ -1,13 +1,15 @@
 // src/components/LogoutDialog.tsx
+"use client";
+
 import React from "react";
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Button,
 } from "@mui/material";
-import Button from "@mui/material/Button";
-import "./style.css"; // Create a new CSS file for the dialog styles
+import "./style.css";
 
 interface LogoutDialogProps {
   open: boolean;
@@ -21,7 +23,13 @@ const LogoutDialog: React.FC<LogoutDialogProps> = ({
   onLogout,
 }) => {
   return (
-    <Dialog open={open} onClose={onClose} classes={{ paper: "logout-dialog" }}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      PaperProps={{
+        className: "logout-dialog", // ✅ Correct way to style MUI Paper
+      }}
+    >
       <DialogTitle className="dialog-title">Logout</DialogTitle>
       <DialogContent className="dialog-content">
         Are you sure you want to logout? All cached data will be cleared.

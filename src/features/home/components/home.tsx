@@ -36,12 +36,14 @@ export default function Home() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-      {/* 🧭 HERO SECTION */}
       <Box className="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-12 border-b border-gray-300">
-        <Box className="hidden lg:block lg:col-span-3">
+        {/* 🧭 Category Sidebar (now always rendered) */}
+        <Box className="col-span-12 lg:col-span-3">
           <CategorySidebar />
         </Box>
-        <Box className="col-span-1 lg:col-span-9">
+
+        {/* 🎠 Hero Slider */}
+        <Box className="col-span-12 lg:col-span-9">
           <HeroSlider />
         </Box>
       </Box>

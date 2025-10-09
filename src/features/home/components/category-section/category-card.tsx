@@ -1,20 +1,28 @@
-"use client";
-
 import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface CategoryCardProps {
-  icon: string; // now it’s an image path
+  icon: string;
   label: string;
+  slug: string; // required
   selected?: boolean;
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
   icon,
   label,
+  slug,
   selected = false,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (slug) navigate(`/category?slug=${slug}`); // ✅ now uses search param
+  };
+
   return (
     <Box
+      onClick={handleClick}
       className={`flex flex-col items-center justify-center border rounded-md p-4 cursor-pointer transition-all duration-300
         ${
           selected
@@ -31,7 +39,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         },
       }}
     >
-      {/* 🖼 Icon */}
       <Box
         component="img"
         src={icon}
@@ -40,23 +47,14 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
           width: 40,
           height: 40,
           mb: 1,
-          flexShrink: 0,
           transition: "all 0.3s ease",
         }}
       />
 
-      {/* 🏷 Label */}
       <Typography
         variant="body2"
         className="font-medium"
         sx={{
-          display: "-webkit-box",
-          WebkitLineClamp: 2, // show up to 2 lines max
-          WebkitBoxOrient: "vertical",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          lineHeight: 1.2,
-          wordBreak: "break-word", // wrap long words
           textAlign: "center",
           fontSize: { xs: "0.75rem", md: "0.875rem" },
         }}

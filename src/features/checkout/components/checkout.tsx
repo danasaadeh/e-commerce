@@ -12,11 +12,16 @@ import { billingSchema } from "../config";
 import { InferType } from "yup";
 import { useNavigate } from "react-router-dom";
 import { useCartStore } from "../../cart/store/index"; // adjust path as needed
+import InvoiceDialog from "./invoice-dialog";
 
 type BillingFormData = InferType<typeof billingSchema>;
 
 const Checkout = () => {
   const navigate = useNavigate();
+
+  const [invoiceOpen, setInvoiceOpen] = useState(false);
+  const [invoiceData, setInvoiceData] = useState<any>(null);
+
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMsg, setSnackbarMsg] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
@@ -32,15 +37,12 @@ const Checkout = () => {
   const onSubmit = (data: BillingFormData) => {
     console.log("✅ Checkout data:", data);
 
-    // ✅ Clear the cart after placing the order
+    // ✅ Store billing info and open invoice dialog
+    setInvoiceData(data);
+    setInvoiceOpen(true);
+
+    // ✅ Clear the cart after placing order
     clearCart();
-
-    setSnackbarSeverity("success");
-    setSnackbarMsg("Checkout successful!");
-    setSnackbarOpen(true);
-
-    // Navigate home after success
-    navigate("/");
   };
 
   const onError = () => {
@@ -100,6 +102,15 @@ const Checkout = () => {
             {snackbarMsg}
           </Alert>
         </Snackbar>
+        <InvoiceDialog
+          open={invoiceOpen}
+          onClose={() => {
+            setInvoiceOpen(false);
+            navigate("/"); // navigate home after closing
+          }}
+          billingInfo={invoiceData}
+          paymentMethod={"Bank Transfer"} // or use from payment form
+        />
       </Container>
     </FormProvider>
   );

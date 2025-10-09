@@ -4,10 +4,12 @@ import homeService from "../services/api";
 /**
  * 🏠 Get all products
  */
-export const useAllProducts = () =>
+
+export const useAllProducts = (offset = 0, limit = 10) =>
   useQuery({
-    queryKey: ["home", "products"],
-    queryFn: homeService.getAllProducts,
+    queryKey: ["home", "products", offset, limit],
+    queryFn: () => homeService.getAllProducts(offset, limit),
+    //keepPreviousData: true, // ✅ prevents flicker between pages
   });
 
 /**

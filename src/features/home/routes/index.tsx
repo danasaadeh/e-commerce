@@ -15,7 +15,7 @@ export const homeRoutes = [
     element: <AllProductsPage />,
   },
   {
-    path: "/category/:slug",
+    path: "/category",
     element: <CategoryPage />,
   },
   {

@@ -3,7 +3,11 @@ import { NavigateNext } from "@mui/icons-material";
 
 const Breadcrumb = () => {
   return (
-    <Box sx={{ mb: { xs: 4, md: 8, lg: 20 } }}>
+    <Box
+      sx={{
+        mb: { xs: 1.5, sm: 2, md: 3 }, // reduced spacing drastically
+      }}
+    >
       <Breadcrumbs
         separator={<NavigateNext fontSize="small" className="text-gray-400" />}
         aria-label="breadcrumb"

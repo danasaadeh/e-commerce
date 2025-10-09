@@ -1,49 +1,52 @@
 /* src/components/logout-dialog.css */
 
 .logout-dialog {
-  background: rgba(255, 255, 255, 0.23); /* Glassy effect */
-  backdrop-filter: blur(16px); /* Blur effect for the background */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Border */
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37); /* Shadow effect */
-  color: white; /* White text color */
-  border-radius: 1rem; /* Rounded corners */
+  background: rgba(255, 255, 255, 0.23) !important; /* Glassy effect */
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37) !important;
+  color: white !important;
+  border-radius: 1rem !important;
 }
 
 .dialog-title {
-  font-size: 1.5rem; /* Title font size */
-  font-weight: bold; /* Bold title */
-  color: white; /* Title text color */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
 }
 
 .dialog-content {
-  padding: 20px; /* Spacing inside the dialog */
-  color: #b0b0b0; /* Subtle text color */
+  padding: 20px;
+  color: #d1d1d1;
 }
 
 .dialog-actions {
   display: flex;
-  justify-content: space-between; /* Space between buttons */
-  padding: 16px; /* Spacing around actions */
+  justify-content: space-between !important;
+  padding: 16px;
 }
 
 .cancel-button {
-  background-color: white; /* White cancel button */
-  color: #000; /* Black text */
-  border-radius: 0.5rem; /* Rounded corners */
-  padding: 8px 16px; /* Button padding */
+  background-color: white !important;
+  color: #000 !important;
+  border-radius: 0.5rem;
+  padding: 8px 16px;
+  text-transform: none;
 }
 
 .logout-button {
-  background-color: #db4444; /* Logout button color */
-  color: #fff; /* White text */
-  border-radius: 0.5rem; /* Rounded corners */
-  padding: 8px 16px; /* Button padding */
+  background-color: #db4444 !important;
+  color: #fff !important;
+  border-radius: 0.5rem;
+  padding: 8px 16px;
+  text-transform: none;
 }
 
 .logout-button:hover {
-  background-color: #a93e3e; /* Darker shade on hover */
+  background-color: #a93e3e;
 }
 
 .cancel-button:hover {
-  background-color: rgba(255, 255, 255, 0.8); /* Light shade on hover */
+  background-color: rgba(255, 255, 255, 0.8);
 }

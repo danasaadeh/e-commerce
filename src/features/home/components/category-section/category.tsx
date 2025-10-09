@@ -50,6 +50,7 @@ const CategoriesSection: React.FC = () => {
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("sm"));
   const { data: categories, isLoading, isError } = useAllCategories();
 
+  // 🌀 Loading skeletons
   if (isLoading) {
     return (
       <Box className="flex justify-center items-center gap-4 py-10">
@@ -66,6 +67,7 @@ const CategoriesSection: React.FC = () => {
     );
   }
 
+  // 🚨 Error or empty
   if (isError || !categories?.length) {
     return (
       <Box className="flex justify-center items-center py-10">
@@ -74,16 +76,17 @@ const CategoriesSection: React.FC = () => {
     );
   }
 
+  // 🧩 Render categories
   return (
     <Box sx={{ mt: 8, px: isMobile ? 2 : 8 }}>
-      {/* 🔴 Section Header */}
+      {/* Section Header */}
       <CategoryHeader
         color="#DB4444"
         title="Categories"
         subtitle="Browse By Category"
       />
 
-      {/* 🏹 Navigation Buttons */}
+      {/* Navigation Arrows */}
       <Box display="flex" justifyContent="flex-end" mb={3}>
         <div className="flex space-x-3">
           <button className="cat-prev h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center hover:bg-gray-300 transition">
@@ -95,7 +98,7 @@ const CategoriesSection: React.FC = () => {
         </div>
       </Box>
 
-      {/* 🌀 Swiper Carousel */}
+      {/* Category Carousel */}
       <Swiper
         spaceBetween={0}
         slidesPerView={5}
@@ -109,12 +112,16 @@ const CategoriesSection: React.FC = () => {
         }}
       >
         {categories.map((cat) => {
-          // Find matching local icon or fallback to placeholder
           const icon = categoryIconMap[cat.name] || CategoryGamepad;
 
           return (
             <SwiperSlide key={cat.id}>
-              <CategoryCard icon={icon} label={cat.name} />
+              {/* ✅ Pass slug prop here */}
+              <CategoryCard
+                icon={icon}
+                label={cat.name}
+                slug={cat.slug} // ✅ now CategoryCard can navigate correctly
+              />
             </SwiperSlide>
           );
         })}

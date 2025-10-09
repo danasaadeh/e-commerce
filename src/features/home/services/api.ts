@@ -42,9 +42,15 @@ const mapProductToUI = (product: ProductDetails): Product => {
 /**
  * Get all products
  */
-export const getAllProducts = async (): Promise<Product[]> => {
+/**
+ * Get paginated products
+ */
+export const getAllProducts = async (
+  offset = 0,
+  limit = 10
+): Promise<Product[]> => {
   const { data } = await httpClient.get<ProductDetails[]>(
-    "https://api.escuelajs.co/api/v1/products"
+    `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${limit}`
   );
   return data.map(mapProductToUI);
 };

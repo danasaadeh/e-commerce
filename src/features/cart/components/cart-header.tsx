@@ -1,4 +1,4 @@
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const CartHeader = () => {
   return (
@@ -9,80 +9,56 @@ const CartHeader = () => {
         px: { xs: 2, sm: 3, md: 4, lg: 6 },
       }}
     >
-      <Grid container alignItems="center" spacing={{ xs: 2, md: 4 }}>
-        <Grid
-          item
-          xs={6}
-          sm={5}
-          md={5}
-          sx={{ display: "flex", justifyContent: "center" }}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          textAlign: "center",
+          gap: { xs: 1, sm: 2, md: 4 },
+        }}
+      >
+        <Typography
+          variant="body1"
+          className="font-medium flex-1"
+          sx={{ fontSize: { xs: "0.875rem", md: "1rem" } }}
         >
-          <Typography
-            variant="body1"
-            className="font-medium"
-            sx={{
-              fontSize: { xs: "0.875rem", md: "1rem" },
-              textAlign: "center",
-            }}
-          >
-            Product
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={0}
-          sm={2}
-          md={2}
-          sx={{ display: { xs: "none", sm: "flex" }, justifyContent: "center" }}
+          Product
+        </Typography>
+
+        <Typography
+          variant="body1"
+          className="font-medium flex-1 hidden sm:block"
+          sx={{
+            fontSize: { xs: "0.875rem", md: "1rem" },
+            textAlign: "center",
+          }}
         >
-          <Typography
-            variant="body1"
-            className="font-medium"
-            sx={{
-              fontSize: { xs: "0.875rem", md: "1rem" },
-              textAlign: "center",
-            }}
-          >
-            Price
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={3}
-          sm={3}
-          md={2.5}
-          sx={{ display: "flex", justifyContent: "center" }}
+          Price
+        </Typography>
+
+        <Typography
+          variant="body1"
+          className="font-medium flex-1"
+          sx={{
+            fontSize: { xs: "0.875rem", md: "1rem" },
+            textAlign: "center",
+          }}
         >
-          <Typography
-            variant="body1"
-            className="font-medium"
-            sx={{
-              fontSize: { xs: "0.875rem", md: "1rem" },
-              textAlign: "center",
-            }}
-          >
-            Quantity
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={3}
-          sm={2}
-          md={2.5}
-          sx={{ display: "flex", justifyContent: "center" }}
+          Quantity
+        </Typography>
+
+        <Typography
+          variant="body1"
+          className="font-medium flex-1"
+          sx={{
+            fontSize: { xs: "0.875rem", md: "1rem" },
+            textAlign: "center",
+          }}
         >
-          <Typography
-            variant="body1"
-            className="font-medium"
-            sx={{
-              fontSize: { xs: "0.875rem", md: "1rem" },
-              textAlign: "center",
-            }}
-          >
-            Subtotal
-          </Typography>
-        </Grid>
-      </Grid>
+          Subtotal
+        </Typography>
+      </Box>
     </Box>
   );
 };

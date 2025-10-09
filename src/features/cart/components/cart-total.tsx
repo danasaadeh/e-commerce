@@ -94,8 +94,8 @@ const CartTotal: React.FC<CartTotalProps> = ({
         onClick={onCheckout}
         className="!capitalize !font-medium"
         sx={{
-          mt: { xs: 4, md: 6 },
-          py: { xs: 1.5, md: 2, lg: 3 },
+          mt: { xs: 2, md: 2 },
+          py: { xs: 1, md: 1, lg: 2 },
           fontSize: { xs: "0.875rem", md: "1rem" },
         }}
       >

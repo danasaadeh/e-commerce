@@ -12,7 +12,7 @@ export const appRoutes = {
   products: "/products",
   checkout: "/checkout",
   product_details: "product/:id",
-  category: "/category/:slug",
+  category: "/category",
   filter: "/filter",
   wishList: "/wishList",
   cart: "/cart",
