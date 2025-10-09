@@ -5,34 +5,62 @@ import { Box, Typography } from "@mui/material";
 import CountdownTimer from "./count-down-timer";
 
 export default function FlashSalesHeader() {
-  const targetDate = Date.now() + 1000 * 60 * 60 * 24; // 24 hours from now
+  const targetDate = Date.now() + 1000 * 60 * 60 * 24 * 3; // 3 days from now
 
   return (
-    <div className="flex items-end mb-8 flex-wrap gap-y-4">
-      {/* Left Label */}
-      <Box className="h-10 w-5 bg-[#db4444] rounded mr-3 flex-shrink-0" />
-      <Typography
-        variant="body1"
-        className="text-[#db4444] font-semibold text-sm mr-6"
+    <Box className="mb-10">
+      {/* 🔴 Top Label Row */}
+      <Box display="flex" alignItems="center" gap={1} mb={1}>
+        <Box
+          sx={{ width: 20, height: 40, bgcolor: "#DB4444", borderRadius: 1 }}
+        />
+        <Typography
+          variant="body1"
+          sx={{
+            color: "#DB4444",
+            fontWeight: 600,
+            fontSize: 14,
+          }}
+        >
+          Today’s
+        </Typography>
+      </Box>
+
+      {/* 🧭 Title, Timer, Arrows */}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        flexWrap="wrap"
+        gap={2}
       >
-        Today's
-      </Typography>
-      <Typography variant="h4" className="text-3xl font-bold whitespace-nowrap">
-        Flash Sales
-      </Typography>
+        {/* Left: Flash Sales + Timer */}
+        <Box display="flex" alignItems="center" gap={4} flexWrap="wrap">
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 600,
+              color: "#000",
+              fontSize: { xs: "1.8rem", md: "2.5rem" },
+            }}
+          >
+            Flash Sales
+          </Typography>
 
-      {/* Countdown Timer */}
-      <CountdownTimer targetDate={targetDate} />
+          {/* Countdown Timer beside title */}
+          <CountdownTimer targetDate={targetDate} />
+        </Box>
 
-      {/* Navigation Arrows */}
-      <div className="ml-auto flex space-x-3">
-        <button className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition">
-          <KeyboardArrowLeft fontSize="small" />
-        </button>
-        <button className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition">
-          <KeyboardArrowRight fontSize="small" />
-        </button>
-      </div>
-    </div>
+        {/* Navigation Arrows */}
+        <Box display="flex" alignItems="center" gap={1.5}>
+          <button className="flash-prev h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition">
+            <KeyboardArrowLeft fontSize="small" />
+          </button>
+          <button className="flash-next h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition">
+            <KeyboardArrowRight fontSize="small" />
+          </button>
+        </Box>
+      </Box>
+    </Box>
   );
 }

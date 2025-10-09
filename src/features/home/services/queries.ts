@@ -1,28 +1,44 @@
 import { useQuery } from "@tanstack/react-query";
 import homeService from "../services/api";
 
+/**
+ * 🏠 Get all products
+ */
 export const useAllProducts = () =>
   useQuery({
     queryKey: ["home", "products"],
     queryFn: homeService.getAllProducts,
   });
 
+/**
+ * 🏷️ Get all categories
+ */
 export const useAllCategories = () =>
   useQuery({
     queryKey: ["home", "categories"],
     queryFn: homeService.getAllCategories,
   });
 
-export const useProductsByCategory = (categoryId: number) =>
+/**
+ * 🧩 Get products by category slug
+ */
+export const useProductsByCategorySlug = (categorySlug: string) =>
   useQuery({
-    queryKey: ["home", "products", categoryId],
-    queryFn: () => homeService.getProductsByCategory(categoryId),
-    enabled: !!categoryId,
+    queryKey: ["home", "products", "slug", categorySlug],
+    queryFn: () => homeService.getProductsByCategorySlug(categorySlug),
+    enabled: !!categorySlug,
   });
 
 /**
- * 🔍 Search products by title
+ * 🔍 Filtered products — uses URL query params
  */
+export const useFilteredProducts = (filters: Record<string, string>) =>
+  useQuery({
+    queryKey: ["home", "products", "filter", filters],
+    queryFn: () => homeService.getFilteredProducts(filters),
+    enabled: Object.keys(filters).length > 0,
+  });
+
 export const useSearchProducts = (query: string) =>
   useQuery({
     queryKey: ["home", "search", query],

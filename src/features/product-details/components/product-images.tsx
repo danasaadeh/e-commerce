@@ -34,7 +34,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({ images }) => {
       </Box>
 
       {/* Main Image - Large display with blue border when active */}
-      <Box className="flex-1 bg-gray-50 rounded border-2 border-blue-500 flex items-center justify-center p-12">
+      <Box className="flex-1 bg-gray-50 rounded border-2 border-white flex items-center justify-center p-12">
         <img
           src={selectedImage || "/placeholder.svg"}
           alt="product"

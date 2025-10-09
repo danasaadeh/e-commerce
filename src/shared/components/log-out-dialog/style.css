@@ -1,0 +1,49 @@
+/* src/components/logout-dialog.css */
+
+.logout-dialog {
+  background: rgba(255, 255, 255, 0.23); /* Glassy effect */
+  backdrop-filter: blur(16px); /* Blur effect for the background */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Border */
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37); /* Shadow effect */
+  color: white; /* White text color */
+  border-radius: 1rem; /* Rounded corners */
+}
+
+.dialog-title {
+  font-size: 1.5rem; /* Title font size */
+  font-weight: bold; /* Bold title */
+  color: white; /* Title text color */
+}
+
+.dialog-content {
+  padding: 20px; /* Spacing inside the dialog */
+  color: #b0b0b0; /* Subtle text color */
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between; /* Space between buttons */
+  padding: 16px; /* Spacing around actions */
+}
+
+.cancel-button {
+  background-color: white; /* White cancel button */
+  color: #000; /* Black text */
+  border-radius: 0.5rem; /* Rounded corners */
+  padding: 8px 16px; /* Button padding */
+}
+
+.logout-button {
+  background-color: #db4444; /* Logout button color */
+  color: #fff; /* White text */
+  border-radius: 0.5rem; /* Rounded corners */
+  padding: 8px 16px; /* Button padding */
+}
+
+.logout-button:hover {
+  background-color: #a93e3e; /* Darker shade on hover */
+}
+
+.cancel-button:hover {
+  background-color: rgba(255, 255, 255, 0.8); /* Light shade on hover */
+}

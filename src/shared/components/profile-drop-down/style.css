@@ -8,6 +8,7 @@
   box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
   color: white; /* use dark text for readability */
   transition: all 0.3s ease-in-out;
+  border-radius: 1rem; /* Add rounding */
 }
 
 .glass-card::before {
@@ -38,4 +39,9 @@
     transparent,
     rgba(255, 255, 255, 0.3)
   );
+}
+
+/* Add specific styling for the dialog */
+.MuiDialog-paper {
+  border-radius: 1rem; /* Make the dialog rounded */
 }

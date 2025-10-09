@@ -14,6 +14,7 @@ import FeaturesSection from "@/features/about/components/features-section";
 
 import type { Product } from "@/features/home/types";
 import { useWishlistStore } from "@/features/wish-list/store";
+import BackToTopButton from "@/shared/components/back-to-top";
 
 export default function Home() {
   const { toggleWishlist } = useWishlistStore();
@@ -79,6 +80,7 @@ export default function Home() {
 
       {/* ⭐ Features */}
       <FeaturesSection />
+      <BackToTopButton />
     </main>
   );
 }

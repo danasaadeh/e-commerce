@@ -1,36 +1,78 @@
 "use client";
 
 import React from "react";
-import { Box, useMediaQuery, useTheme as useMuiTheme } from "@mui/material";
+import {
+  Box,
+  useMediaQuery,
+  useTheme as useMuiTheme,
+  Skeleton,
+} from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
-// 🖼️ Category Images
+import CategoryCard from "./category-card";
+import CategoryHeader from "./category-header";
+import { useAllCategories } from "@/features/home/services/queries";
+
+// 🖼️ Local category icons
 import CategoryCamera from "@/assets/icons/categories/Category-Camera .svg";
 import CategoryCellPhone from "@/assets/icons/categories/Category-CellPhone.svg";
 import CategoryComputer from "@/assets/icons/categories/Category-Computer.svg";
 import CategoryGamepad from "@/assets/icons/categories/Category-Gamepad.svg";
 import CategoryWatch from "@/assets/icons/categories/Category-SmartWatch.svg";
 import CategoryHeadphone from "@/assets/icons/categories/Category-Headphone.svg";
-import CategoryCard from "./category-card";
-import CategoryHeader from "./category-header";
+import CategoryShoes from "@/assets/icons/categories/shoes.svg";
+import CategoryFurniture from "@/assets/icons/categories/furniture.svg";
+import CategoryClothes from "@/assets/icons/categories/clothes.svg";
 
-const categories = [
-  { name: "Phones", icon: CategoryCellPhone },
-  { name: "Computers", icon: CategoryComputer },
-  { name: "Smartwatch", icon: CategoryWatch },
-  { name: "Camera", icon: CategoryCamera },
-  { name: "Headphones", icon: CategoryHeadphone },
-  { name: "Gaming", icon: CategoryGamepad },
-];
+// 🔗 Map backend category names to local SVG icons
+const categoryIconMap: Record<string, string> = {
+  Phones: CategoryCellPhone,
+  Smartphones: CategoryCellPhone,
+  Computers: CategoryComputer,
+  Laptops: CategoryComputer,
+  Smartwatch: CategoryWatch,
+  Watches: CategoryWatch,
+  Camera: CategoryCamera,
+  Headphones: CategoryHeadphone,
+  Audio: CategoryHeadphone,
+  Gaming: CategoryGamepad,
+  Shoes: CategoryShoes,
+  Furniture: CategoryFurniture,
+  Clothes: CategoryClothes,
+};
 
 const CategoriesSection: React.FC = () => {
   const muiTheme = useMuiTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("sm"));
+  const { data: categories, isLoading, isError } = useAllCategories();
+
+  if (isLoading) {
+    return (
+      <Box className="flex justify-center items-center gap-4 py-10">
+        {[...Array(6)].map((_, i) => (
+          <Skeleton
+            key={i}
+            variant="rectangular"
+            width={120}
+            height={120}
+            sx={{ borderRadius: 2 }}
+          />
+        ))}
+      </Box>
+    );
+  }
+
+  if (isError || !categories?.length) {
+    return (
+      <Box className="flex justify-center items-center py-10">
+        <p className="text-gray-500">No categories found.</p>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ mt: 8, px: isMobile ? 2 : 8 }}>
@@ -66,15 +108,16 @@ const CategoriesSection: React.FC = () => {
           0: { slidesPerView: 1.5 },
         }}
       >
-        {categories.map((cat) => (
-          <SwiperSlide key={cat.name}>
-            <CategoryCard
-              icon={cat.icon}
-              label={cat.name}
-              // selected={cat.name === "Camera"} // optional default selected
-            />
-          </SwiperSlide>
-        ))}
+        {categories.map((cat) => {
+          // Find matching local icon or fallback to placeholder
+          const icon = categoryIconMap[cat.name] || CategoryGamepad;
+
+          return (
+            <SwiperSlide key={cat.id}>
+              <CategoryCard icon={icon} label={cat.name} />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </Box>
   );

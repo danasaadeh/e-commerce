@@ -10,11 +10,11 @@ const NewArrivalHeader: React.FC = () => {
           sx={{
             width: 20,
             height: 40,
-            bgcolor: "red",
+            bgcolor: "#DB4444",
             borderRadius: 1,
           }}
         />
-        <Typography variant="h5" sx={{ fontWeight: 700, color: "green" }}>
+        <Typography variant="h5" sx={{ fontWeight: 700, color: "#DB4444" }}>
           Featured
         </Typography>
       </Box>

@@ -1,35 +1,72 @@
 "use client";
 
-import ProductCard from "./prouct-card";
-import { Product } from "../../types";
+import { Grid, Typography, Skeleton } from "@mui/material";
+import ProductCard from "@/features/home/components/products/prouct-card";
+import type { Product } from "@/features/home/types";
 
-interface ProductsListProps {
-  products: Product[];
+interface ProductListProps {
+  products?: Product[];
+  isLoading?: boolean;
   onAddToCart?: (id: string) => void;
   onToggleWishlist?: (product: Product) => void;
   onQuickView?: (id: string) => void;
-  wishlistMode?: boolean; // 👈 add this
 }
 
-export default function ProductsList({
-  products,
+export default function ProductList({
+  products = [],
+  isLoading,
   onAddToCart,
   onToggleWishlist,
   onQuickView,
-  wishlistMode = false, // 👈 default false
-}: ProductsListProps) {
+}: ProductListProps) {
+  if (isLoading) {
+    // 👇 render 8 skeletons in a grid, similar to the product card layout
+    return (
+      <Grid container spacing={3} justifyContent="center">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <Grid key={index} item xs={6} sm={4} md={3}>
+            <div className="flex flex-col items-center">
+              <Skeleton
+                variant="rectangular"
+                width={250}
+                height={200}
+                sx={{ borderRadius: 1 }}
+              />
+              <Skeleton
+                animation="wave"
+                width="80%"
+                height={24}
+                sx={{ mt: 1 }}
+              />
+              <Skeleton animation="wave" width="60%" height={20} />
+              <Skeleton animation="wave" width="40%" height={20} />
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+    );
+  }
+
+  if (!products?.length) {
+    return (
+      <Typography variant="body1" align="center" sx={{ py: 4 }}>
+        No products found.
+      </Typography>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
+    <Grid container spacing={3} justifyContent="center">
       {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          {...product}
-          onAddToCart={onAddToCart}
-          onToggleWishlist={onToggleWishlist}
-          onQuickView={onQuickView}
-          wishlistMode={wishlistMode} // 👈 pass to ProductCard
-        />
+        <Grid key={product.id} item xs={6} sm={4} md={3}>
+          <ProductCard
+            product={product}
+            onAddToCart={onAddToCart}
+            onToggleWishlist={onToggleWishlist}
+            onQuickView={onQuickView}
+          />
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 }

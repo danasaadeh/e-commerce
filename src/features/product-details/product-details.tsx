@@ -1,49 +1,89 @@
-import { Container } from "@mui/material";
+"use client";
+
+import { Container, Box, CircularProgress, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
+
 import ProductBreadcrumb from "./components/product-breadcrumb";
 import ProductDeliveryInfo from "./components/product-delivery-info";
 import ProductImages from "./components/product-images";
 import ProductInfo from "./components/product-info";
 import RelatedItems from "./components/related-items/related-items";
 
+import { useProductDetails } from "@/features/product-details/services/queries";
+import type { Product } from "@/features/home/types";
+
+interface ProductDisplay extends Product {
+  inStock: boolean;
+  description: string;
+  colors: string[];
+  sizes: string[];
+  images: string[];
+  category: string;
+  reviews: number; // ✅ Added for UI consistency
+}
+
 const ProductDetails = () => {
-  const product = {
-    id: 1,
-    name: "Havic HV G-92 Gamepad",
-    price: 192.0,
-    rating: 4.5,
-    reviews: 150,
+  const params = useParams();
+  const productId = Number(params?.id);
+
+  const { data: product, isLoading, isError } = useProductDetails(productId);
+
+  // ⏳ Loading
+  if (isLoading) {
+    return (
+      <Box className="flex justify-center items-center h-[70vh]">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // ❌ Error or Not Found
+  if (isError || !product) {
+    return (
+      <Box className="flex justify-center items-center h-[70vh]">
+        <Typography variant="h6" color="error">
+          Failed to load product details.
+        </Typography>
+      </Box>
+    );
+  }
+
+  // ✅ Build product object in UI-friendly format
+  const mappedProduct = {
+    id: product.id?.toString() ?? "0",
+    name: product.title ?? "Unknown Product",
+    price: product.price ?? 0,
+    rating: 4.5, // or product.rating if API provides
+    reviewCount: 25, // if your API doesn’t provide this, keep it fixed for now
+    reviews: 25, // for ProductInfo
     inStock: true,
-    description:
-      "PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal. Pressure sensitive.",
-    images: [
-      "src/assets/images/product-details/holder3.png",
-      "src/assets/images/product-details/holder6.png",
-      "src/assets/images/product-details/holder7.png",
-      "src/assets/images/product-details/holder4.png",
-      "src/assets/images/product-details/holder5.png",
-    ],
-    colors: ["#000000", "#d32f2f"],
+    description: product.description ?? "No description available.",
+    colors: ["#000", "#d32f2f"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    image: product.images?.[0] ?? "/placeholder.png",
+    images: product.images ?? ["/placeholder.png"],
+    category: product.category?.name ?? "Other",
   };
 
   return (
     <Container maxWidth="lg" className="py-8">
       <ProductBreadcrumb />
 
-      <div className="flex gap-6 mt-8">
-        {/* Images section (thumbnails + main image) */}
-        <div className="flex-[0_0_55%]">
-          <ProductImages images={product.images} />
+      <div className="flex flex-col lg:flex-row gap-6 mt-8">
+        {/* 🖼️ Product Images */}
+        <div className="lg:w-[55%] w-full">
+          <ProductImages images={mappedProduct.images} />
         </div>
 
-        {/* Product Info section */}
+        {/* 🧾 Product Info */}
         <div className="flex-1">
-          <ProductInfo product={product} />
+          <ProductInfo product={mappedProduct} />
           <ProductDeliveryInfo />
         </div>
       </div>
 
-      <RelatedItems />
+      {/* 🛍️ Related Items */}
+      <RelatedItems category={mappedProduct.category} />
     </Container>
   );
 };

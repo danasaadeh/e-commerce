@@ -1,20 +1,19 @@
 import type React from "react";
 import { Box, Typography, Rating, Chip, Divider } from "@mui/material";
 import ProductActions from "./product-actions";
+import type { Product as BaseProduct } from "@/features/home/types"; // ✅ import shared Product type
 
-interface Product {
-  name: string;
-  price: number;
-  rating: number;
-  reviews: number;
+// Extend your shared Product type with additional UI fields
+export interface ProductInfoType extends BaseProduct {
   inStock: boolean;
   description: string;
   colors: string[];
   sizes: string[];
+  reviews: number;
 }
 
 interface ProductInfoProps {
-  product: Product;
+  product: ProductInfoType;
 }
 
 const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
@@ -48,7 +47,12 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
       <Divider className="!my-5" />
 
-      <ProductActions colors={product.colors} sizes={product.sizes} />
+      {/* ✅ Pass full product down */}
+      <ProductActions
+        product={product}
+        colors={product.colors}
+        sizes={product.sizes}
+      />
     </Box>
   );
 };

@@ -3,12 +3,13 @@
 import { Box, Button } from "@mui/material";
 import ExploreHeader from "./explore-products-header";
 import ProductsList from "../products/products-list";
-import { Product, products } from "../../types";
+import { Product } from "../../types";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-
+import { useAllProducts } from "../../services/queries"; // ✅ use the same React Query hook
+import { useNavigate } from "react-router-dom";
 interface ExploreProductsProps {
   onAddToCart?: (id: string) => void;
-  onToggleWishlist?: (product: Product) => void; // 👈 updated here
+  onToggleWishlist?: (product: Product) => void;
   onQuickView?: (id: string) => void;
 }
 
@@ -17,9 +18,18 @@ export default function ExploreProducts({
   onToggleWishlist,
   onQuickView,
 }: ExploreProductsProps) {
+  // ✅ Fetch data from backend
+  const { data: products, isLoading, isError } = useAllProducts();
+
+  // ✅ Take a slice of products for the explore section
+  const exploreProducts = products?.slice(14, 22) || [];
+  const navigate = useNavigate();
+
   return (
     <Box className="py-12">
       <ExploreHeader />
+
+      {/* Navigation Arrows */}
       <Box display="flex" justifyContent="flex-end" mb={3}>
         <div className="flex space-x-3">
           <button className="cat-prev h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center hover:bg-gray-300 transition">
@@ -30,15 +40,20 @@ export default function ExploreProducts({
           </button>
         </div>
       </Box>
+
+      {/* ✅ Product list handles skeletons internally */}
       <ProductsList
+        isLoading={isLoading}
+        products={isError ? [] : exploreProducts}
         onAddToCart={onAddToCart}
         onToggleWishlist={onToggleWishlist}
         onQuickView={onQuickView}
-        products={products}
       />
+
       {/* View All Button */}
       <Box textAlign="center" mt={4}>
         <Button
+          onClick={() => navigate(`/products`)}
           variant="contained"
           sx={{
             px: 6,
@@ -47,8 +62,8 @@ export default function ExploreProducts({
             fontSize: 15,
             textTransform: "none",
             borderRadius: 1,
-            bgcolor: "#cc0000",
-            "&:hover": { bgcolor: "#cc0000" },
+            bgcolor: "#DB4444",
+            "&:hover": { bgcolor: "#DB4444" },
           }}
         >
           View All Products

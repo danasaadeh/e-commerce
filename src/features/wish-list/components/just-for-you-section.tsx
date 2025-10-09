@@ -5,8 +5,9 @@ import { Box, Button } from "@mui/material";
 import ProductsList from "@/features/home/components/products/products-list";
 import CategoryHeader from "@/features/home/components/category-section/category-header";
 import { products } from "@/features/home/types";
-
+import { useNavigate } from "react-router-dom";
 export default function JustForYouSection() {
+  const navigate = useNavigate();
   return (
     <Box>
       {/* Header with "See All" button */}
@@ -16,8 +17,9 @@ export default function JustForYouSection() {
         justifyContent="space-between"
         mb={3}
       >
-        <CategoryHeader title="Just For You" />
+        <CategoryHeader title="Just For You" color="#DB4444" />
         <Button
+          onClick={() => navigate(`/products`)}
           variant="outlined"
           sx={{
             borderColor: "#000",
@@ -34,7 +36,7 @@ export default function JustForYouSection() {
         </Button>
       </Box>
 
-      <ProductsList products={products} />
+      <ProductsList products={products.slice(0, 4)} />
     </Box>
   );
 }

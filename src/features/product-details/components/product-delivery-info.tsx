@@ -18,7 +18,11 @@ const ProductDeliveryInfo = () => {
           <Link
             href="#"
             underline="always"
-            className="text-sm text-gray-700 hover:text-gray-900"
+            sx={{
+              color: "#101828",
+              "&:hover": { color: "#111" },
+              fontSize: "0.875rem",
+            }}
           >
             Enter your postal code for Delivery Availability
           </Link>
@@ -42,7 +46,10 @@ const ProductDeliveryInfo = () => {
             <Link
               href="#"
               underline="always"
-              className="text-gray-700 hover:text-gray-900"
+              sx={{
+                color: "#101828",
+                "&:hover": { color: "#111" },
+              }}
             >
               Details
             </Link>

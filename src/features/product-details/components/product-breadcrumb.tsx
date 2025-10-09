@@ -8,6 +8,9 @@ const ProductBreadcrumb = () => {
         component={RouterLink}
         to="/account"
         underline="hover"
+        sx={{
+          color: "#7F7F7F",
+        }}
         className="text-gray-600 hover:text-gray-900"
       >
         Account
@@ -16,6 +19,9 @@ const ProductBreadcrumb = () => {
         component={RouterLink}
         to="/gaming"
         underline="hover"
+        sx={{
+          color: "#7F7F7F",
+        }}
         className="text-gray-600 hover:text-gray-900"
       >
         Gaming

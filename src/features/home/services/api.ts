@@ -83,10 +83,38 @@ export const searchProductsByTitle = async (
   );
   return data.map(mapProductToUI);
 };
+/**
+ * Get products by category slug
+ */
+export const getProductsByCategorySlug = async (
+  categorySlug: string
+): Promise<Product[]> => {
+  const { data } = await httpClient.get<ProductDetails[]>(
+    `https://api.escuelajs.co/api/v1/products/?categorySlug=${encodeURIComponent(
+      categorySlug
+    )}`
+  );
+  return data.map(mapProductToUI);
+};
+/**
+ * Get products with dynamic filters
+ * e.g. /products?categorySlug=clothes&price_min=50
+ */
+export const getFilteredProducts = async (
+  filters: Record<string, string>
+): Promise<Product[]> => {
+  const queryString = new URLSearchParams(filters).toString();
+  const { data } = await httpClient.get<ProductDetails[]>(
+    `https://api.escuelajs.co/api/v1/products?${queryString}`
+  );
+  return data.map(mapProductToUI);
+};
 
 export default {
   getAllProducts,
   getAllCategories,
   getProductsByCategory,
-  searchProductsByTitle, // ✅ added
+  getProductsByCategorySlug,
+  getFilteredProducts, // ✅ added
+  searchProductsByTitle,
 };
