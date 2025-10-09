@@ -153,7 +153,6 @@ const Footer: React.FC = () => {
                 className="text-transparent stroke-white"
                 style={{ strokeWidth: 20 }}
               />
-
               <a
                 aria-label="instagram"
                 href="#"
@@ -168,12 +167,12 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
+        {/* ✅ Centered Copyright */}
         <div className="border-t border-gray-800 mt-10 pt-4">
-          <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-500 gap-4">
-            <div className="flex items-center gap-1">
-              <span>©</span>
-              <span>Copyright Rimel 2022. All right reserved</span>
-            </div>
+          <div className="flex justify-center text-sm text-gray-500">
+            <p className="text-center">
+              © Copyright Rimel 2022. All rights reserved.
+            </p>
           </div>
         </div>
       </div>
