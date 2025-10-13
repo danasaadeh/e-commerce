@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"; // <-- note: react-router-dom, not react-router
+import { createHashRouter, Outlet, RouterProvider } from "react-router-dom"; // <-- note: react-router-dom, not react-router
 import { lazy } from "react";
 import { LayoutContainer } from "../shared/layout/layout-container";
 import { authRoutes } from "../features/auth/routes";
@@ -40,9 +40,7 @@ const routes = [
   },
 ];
 
-const router = createBrowserRouter(routes, {
-  basename: "/e-commerce",
-});
+const router = createHashRouter(routes);
 
 export function AppRouterProvider() {
   return <RouterProvider router={router} />;
