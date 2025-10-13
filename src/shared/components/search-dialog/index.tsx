@@ -17,10 +17,10 @@ import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
 import { useDebounce } from "@/shared/hooks/debounce";
 import { useSearchProducts } from "@/features/home/services/queries";
-import ProductList from "@/features/home/components/products/products-list"; // ✅ Use your product list
+import ProductList from "@/features/home/components/products/products-list";
 import { useWishlistStore } from "@/features/wish-list/store";
 import { useCartStore } from "@/features/cart/store";
-import "./style.css"; // glassy dialog css
+import "./style.css";
 
 interface SearchDialogProps {
   open: boolean;
@@ -72,20 +72,19 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
       maxWidth="md"
       fullWidth
       PaperProps={{
-        className: "search-dialog", // ✅ attach the CSS class here
+        className: "search-dialog",
         sx: {
-          backgroundColor: "rgba(255, 255, 255, 0.23) !important",
-          backdropFilter: "blur(16px)",
-          border: "1px solid rgba(255,255,255,0.4)",
-          boxShadow: "0 8px 32px rgba(31, 38, 135, 0.37)",
+          backgroundColor: "#EFF0F6", // ✅ fixed solid color
+          border: "1px solid #E0E0E0",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
           borderRadius: "1rem",
           overflow: "hidden",
         },
       }}
       BackdropProps={{
         sx: {
-          backgroundColor: "rgba(0,0,0,0.4)", // soft dark overlay
-          backdropFilter: "blur(6px)", // makes it look glossy behind
+          backgroundColor: "rgba(0,0,0,0.3)", // soft dim background
+          backdropFilter: "none", // ✅ remove blur behind dialog
         },
       }}
     >
@@ -93,7 +92,7 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
         className="search-dialog-content"
         sx={{
           p: isMobile ? 2 : 4,
-          backgroundColor: "transparent", // 👈 important
+          backgroundColor: "#EFF0F6", // ✅ solid background
         }}
       >
         {/* 🔍 Search Header */}
@@ -108,28 +107,31 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <AiOutlineSearch color="#fff" />
+                  <AiOutlineSearch color="#666" />
                 </InputAdornment>
               ),
               endAdornment: query && (
-                <IconButton onClick={() => setQuery("")} sx={{ color: "#fff" }}>
+                <IconButton onClick={() => setQuery("")} sx={{ color: "#666" }}>
                   <AiOutlineClose />
                 </IconButton>
               ),
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "#fff",
+                borderRadius: "30px",
+              },
             }}
           />
           <IconButton
             onClick={onClose}
             sx={{
-              color: "#DB4444", // 👈 brand red
+              color: "#fff",
               ml: 1,
-              backgroundColor: "rgba(255,255,255,0.15)",
-              border: "1px solid rgba(255,255,255,0.25)",
-              backdropFilter: "blur(8px)",
+              backgroundColor: "#DB4444",
               transition: "all 0.3s ease",
               "&:hover": {
-                backgroundColor: "#DB4444",
-                color: "#fff",
+                backgroundColor: "#b83636",
                 transform: "scale(1.1)",
               },
             }}
@@ -141,19 +143,22 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose }) => {
         {/* 💡 Suggestions */}
         {!debouncedQuery && (
           <div>
-            <p className="text-sm text-gray-200 mb-2">Popular Searches</p>
+            <p className="text-sm text-gray-600 mb-2">Popular Searches</p>
             <List dense disablePadding>
               {suggestions.map((s, index) => (
                 <React.Fragment key={s}>
                   <ListItemButton
                     onClick={() => setQuery(s)}
                     className="search-suggestion"
-                    sx={{ borderRadius: "12px" }}
+                    sx={{
+                      borderRadius: "12px",
+                      "&:hover": { backgroundColor: "#e4e6f1" },
+                    }}
                   >
                     <ListItemText primary={s} />
                   </ListItemButton>
                   {index < suggestions.length - 1 && (
-                    <Divider sx={{ borderColor: "rgba(255,255,255,0.2)" }} />
+                    <Divider sx={{ borderColor: "#ddd" }} />
                   )}
                 </React.Fragment>
               ))}

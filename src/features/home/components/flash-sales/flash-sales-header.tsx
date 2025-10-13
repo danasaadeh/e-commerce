@@ -14,15 +14,8 @@ export default function FlashSalesHeader() {
         <Box
           sx={{ width: 20, height: 40, bgcolor: "#DB4444", borderRadius: 1 }}
         />
-        <Typography
-          variant="body1"
-          sx={{
-            color: "#DB4444",
-            fontWeight: 600,
-            fontSize: 14,
-          }}
-        >
-          Today’s
+        <Typography variant="h5" sx={{ fontWeight: 700, color: "#DB4444" }}>
+          Today's
         </Typography>
       </Box>
 

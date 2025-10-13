@@ -9,7 +9,7 @@ import {
   CircularProgress,
   useMediaQuery,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTheme } from "@mui/material/styles";
@@ -25,8 +25,12 @@ interface LoginFormData {
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  // ✅ Capture where user came from (default to home)
+  const from = location.state?.from || appRoutes.home;
 
   const {
     register,
@@ -55,7 +59,7 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const response = await login({
+      await login({
         email: data.email,
         password: data.password,
       });
@@ -66,8 +70,9 @@ const LoginForm: React.FC = () => {
         severity: "success",
       });
 
+      // ✅ Redirect user to their origin page or home
       setTimeout(() => {
-        navigate(appRoutes.home);
+        navigate(from, { replace: true });
       }, 1500);
     } catch (error: any) {
       setSnackbar({

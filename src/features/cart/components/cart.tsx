@@ -47,8 +47,12 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    if (isLoggedIn) navigate("/checkout");
-    else navigate("/login", { state: { from: "/checkout" } });
+    if (isLoggedIn) {
+      navigate(appRoutes.checkout);
+    } else {
+      // 👇 Send user to login and remember that they came from the cart
+      navigate(appRoutes.auth.login, { state: { from: appRoutes.cart } });
+    }
   };
 
   const handleApplyCoupon = (code: string) => {
