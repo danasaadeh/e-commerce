@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  Outlet,
-  RouterProvider,
-} from "react-router-dom"; // <-- note: react-router-dom, not react-router
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"; // <-- note: react-router-dom, not react-router
 import { lazy } from "react";
 import { LayoutContainer } from "../shared/layout/layout-container";
 import { authRoutes } from "../features/auth/routes";
@@ -48,8 +43,5 @@ const routes = [
 const router = createBrowserRouter(routes);
 
 export function AppRouterProvider() {
-  return;
-  <BrowserRouter basename="/e-commerce">
-    <RouterProvider router={router} />
-  </BrowserRouter>;
+  return <RouterProvider router={router} />;
 }
