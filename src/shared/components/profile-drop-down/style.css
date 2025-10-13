@@ -1,47 +1,31 @@
-/* profile-dropdown.css */
+/* Remove unwanted MUI white layer backgrounds */
+.MuiPopover-root,
+.MuiDialog-root,
+.MuiPaper-root,
+.MuiMenu-paper {
+  background: transparent !important;
+  box-shadow: none !important;
+}
 
+/* Ensure no white halo from ancestor stacking contexts */
 .glass-card {
-  background: rgba(255, 255, 255, 0.23);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-  color: white; /* use dark text for readability */
-  transition: all 0.3s ease-in-out;
-  border-radius: 1rem; /* Add rounding */
+  background: rgba(30, 30, 30, 0.4);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate; /* creates new stacking context to isolate background blending */
 }
 
-.glass-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.8),
-    transparent
-  );
+/* Prevent white flash on hover or buttons */
+.glass-card button {
+  background-color: transparent !important;
 }
 
-.glass-card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.8),
-    transparent,
-    rgba(255, 255, 255, 0.3)
-  );
-}
-
-/* Add specific styling for the dialog */
-.MuiDialog-paper {
-  border-radius: 1rem; /* Make the dialog rounded */
+/* Optional: nicer hover state */
+.glass-card button:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
 }

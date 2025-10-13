@@ -8,7 +8,7 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import LogoutDialog from "../log-out-dialog/index"; // Import the LogoutDialog
+import LogoutDialog from "../log-out-dialog/index";
 import "./style.css";
 
 interface ProfileDropdownProps {
@@ -43,30 +43,34 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onClose }) => {
     {
       icon: <LogoutOutlinedIcon fontSize="small" />,
       label: "Logout",
-      onClick: () => setOpenLogoutDialog(true), // Open the dialog
+      onClick: () => setOpenLogoutDialog(true),
     },
   ];
 
   const handleLogout = () => {
     logoutHelper();
-    // You might also want to update your state management or redirect here
   };
 
   return (
     <>
       <div
-        className="glass-card absolute right-0 mt-3 w-56 rounded-2xl py-3 shadow-xl z-50 backdrop-blur-lg"
+        className="glass-card fixed right-8 top-20 w-56 rounded-2xl py-3 z-[9999]"
+        style={{
+          backdropFilter: "blur(16px) saturate(160%)",
+          WebkitBackdropFilter: "blur(16px) saturate(160%)",
+          backgroundColor: "rgba(30, 30, 30, 0.4)", // subtle dark glass
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.25)",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
-        <ul className="flex flex-col space-y-1 ">
+        <ul className="flex flex-col space-y-1 text-white">
           {menuItems.map((item, idx) => (
             <li key={idx}>
               <button
                 onClick={() => {
                   item.onClick();
-                  if (item.label !== "Logout") {
-                    onClose();
-                  }
+                  if (item.label !== "Logout") onClose();
                 }}
                 className="flex items-center gap-3 w-full px-4 py-2 text-sm rounded-lg transition hover:bg-white/20 hover:translate-x-1"
               >
@@ -78,7 +82,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onClose }) => {
         </ul>
       </div>
 
-      {/* Logout Dialog */}
       <LogoutDialog
         open={openLogoutDialog}
         onClose={() => setOpenLogoutDialog(false)}
