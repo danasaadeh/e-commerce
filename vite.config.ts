@@ -4,11 +4,14 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
+  base: "/e-commerce/", // 👈 force it, don’t depend on NODE_ENV
   plugins: [react(), tailwindcss()],
-  base: process.env.NODE_ENV === "production" ? "/e-commerce/" : "/",
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"), // ✅ use __dirname, not "./src"
+      "@": path.resolve(__dirname, "./src"),
     },
+  },
+  build: {
+    outDir: "dist",
   },
 });
