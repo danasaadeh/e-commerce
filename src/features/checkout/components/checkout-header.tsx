@@ -1,4 +1,3 @@
-// src/pages/Checkout/components/CheckoutHeader.tsx
 import React from "react";
 import { Breadcrumbs, Link as MuiLink, Typography, Box } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";

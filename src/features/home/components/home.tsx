@@ -1,5 +1,3 @@
-"use client";
-
 import { Box } from "@mui/material";
 import CategorySidebar from "./category-sidebar";
 import HeroSlider from "./hero-sections/hero-slider";

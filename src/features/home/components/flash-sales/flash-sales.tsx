@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Button, Skeleton } from "@mui/material";
 import FlashSalesHeader from "./flash-sales-header";
 import { Product } from "../../types";

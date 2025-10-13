@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Button } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 

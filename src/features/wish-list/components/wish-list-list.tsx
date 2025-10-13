@@ -1,4 +1,3 @@
-"use client";
 import ProductCard from "@/features/home/components/products/prouct-card";
 import { Grid } from "@mui/material";
 import { useWishlistStore } from "../store";

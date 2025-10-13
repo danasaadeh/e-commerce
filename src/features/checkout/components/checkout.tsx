@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Container, Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";

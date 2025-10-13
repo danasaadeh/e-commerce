@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Button } from "@mui/material";
 import ExploreHeader from "./explore-products-header";
 import ProductsList from "../products/products-list";

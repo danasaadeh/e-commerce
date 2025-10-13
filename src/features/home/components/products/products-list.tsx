@@ -1,5 +1,3 @@
-"use client";
-
 import { Grid, Typography, Skeleton } from "@mui/material";
 import ProductCard from "@/features/home/components/products/prouct-card";
 import type { Product } from "@/features/home/types";

@@ -1,4 +1,3 @@
-"use client";
 import { Box, Typography, Button } from "@mui/material";
 import { useWishlistStore } from "../store";
 

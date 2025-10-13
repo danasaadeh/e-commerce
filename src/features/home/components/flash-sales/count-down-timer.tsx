@@ -1,5 +1,3 @@
-"use client";
-
 import Countdown from "react-countdown";
 import { Box, Typography } from "@mui/material";
 

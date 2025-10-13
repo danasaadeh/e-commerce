@@ -1,4 +1,3 @@
-"use client";
 import { Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { appRoutes } from "@/routes";

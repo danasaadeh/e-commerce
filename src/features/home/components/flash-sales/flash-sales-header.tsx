@@ -1,5 +1,3 @@
-"use client";
-
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import CountdownTimer from "./count-down-timer";

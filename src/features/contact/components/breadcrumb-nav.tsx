@@ -1,5 +1,3 @@
-"use client";
-
 import type React from "react";
 import { Breadcrumbs, Link, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";

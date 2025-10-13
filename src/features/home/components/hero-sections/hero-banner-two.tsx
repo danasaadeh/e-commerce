@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Button, Typography } from "@mui/material";
 
 import SpeakerImg from "@/assets/images/home/hero-sections/mp3.png"; // or .svg — whatever you have

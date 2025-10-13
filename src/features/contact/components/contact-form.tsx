@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
