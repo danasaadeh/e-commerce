@@ -5,7 +5,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/e-commerce/",
+  base: process.env.NODE_ENV === "production" ? "/e-commerce/" : "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"), // ✅ use __dirname, not "./src"
