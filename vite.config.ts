@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
-  base: "/e-commerce/", // 👈 force it, don’t depend on NODE_ENV
+  base: "/", // 👈 force it, don’t depend on NODE_ENV
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
