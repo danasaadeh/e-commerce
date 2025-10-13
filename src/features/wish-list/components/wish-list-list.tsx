@@ -10,7 +10,7 @@ export default function WishlistList() {
   return (
     <Grid container spacing={3}>
       {wishlist.map((product) => (
-        <Grid item xs={12} sm={6} md={3} key={product.id}>
+        <Grid key={product.id}>
           <ProductCard
             product={product}
             onToggleWishlist={toggleWishlist}

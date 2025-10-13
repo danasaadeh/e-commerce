@@ -1,5 +1,4 @@
-import { Typography, Skeleton } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2"; // ✅ works with MUI v5 & v6
+import { Grid, Typography, Skeleton } from "@mui/material";
 import ProductCard from "@/features/home/components/products/prouct-card";
 import type { Product } from "@/features/home/types";
 
@@ -19,10 +18,11 @@ export default function ProductList({
   onQuickView,
 }: ProductListProps) {
   if (isLoading) {
+    // 👇 render 8 skeletons in a grid, similar to the product card layout
     return (
-      <Grid2 container spacing={3} justifyContent="center">
+      <Grid container spacing={3} justifyContent="center">
         {Array.from({ length: 8 }).map((_, index) => (
-          <Grid2 key={index} xs={6} sm={4} md={3}>
+          <Grid key={index}>
             <div className="flex flex-col items-center">
               <Skeleton
                 variant="rectangular"
@@ -39,9 +39,9 @@ export default function ProductList({
               <Skeleton animation="wave" width="60%" height={20} />
               <Skeleton animation="wave" width="40%" height={20} />
             </div>
-          </Grid2>
+          </Grid>
         ))}
-      </Grid2>
+      </Grid>
     );
   }
 
@@ -54,17 +54,17 @@ export default function ProductList({
   }
 
   return (
-    <Grid2 container spacing={3} justifyContent="center">
+    <Grid container spacing={3} justifyContent="center">
       {products.map((product) => (
-        <Grid2 key={product.id} xs={6} sm={4} md={3}>
+        <Grid key={product.id}>
           <ProductCard
             product={product}
             onAddToCart={onAddToCart}
             onToggleWishlist={onToggleWishlist}
             onQuickView={onQuickView}
           />
-        </Grid2>
+        </Grid>
       ))}
-    </Grid2>
+    </Grid>
   );
 }

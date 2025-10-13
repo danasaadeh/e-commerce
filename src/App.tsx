@@ -10,9 +10,8 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename="/e-commerce">
-        <AppRouterProvider />
-      </BrowserRouter>
+      <AppRouterProvider />
+
       <ToastContainer />
     </QueryClientProvider>
   );
