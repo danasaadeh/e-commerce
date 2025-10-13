@@ -11,7 +11,9 @@ import { cartRoutes } from "@/features/cart/routes";
 import { checkoutRoutes } from "@/features/checkout/routes";
 import { productDetailsRoutes } from "@/features/product-details/routes";
 
-const NotFoundPage = lazy(() => import("../shared/pages/not-found-page"));
+const NotFoundPage = lazy(
+  () => import(`${import.meta.env.BASE_URL}src/shared/pages/not-found-page.tsx`)
+);
 
 const routes = [
   {
