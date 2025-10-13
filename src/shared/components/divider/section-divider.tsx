@@ -1,4 +1,3 @@
-// src/components/shared/SectionDivider.tsx
 import { Box } from "@mui/material";
 
 export default function SectionDivider() {

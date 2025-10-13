@@ -1,10 +1,7 @@
-"use client";
-
 import type React from "react";
 import { Link } from "react-router-dom";
 import { Send } from "@mui/icons-material";
 
-// ✅ Font Awesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,

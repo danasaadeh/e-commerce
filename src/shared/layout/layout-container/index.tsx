@@ -4,8 +4,6 @@ import Navbar from "../navbar";
 import SignupPage from "../../../features/auth/components/sign-up-form";
 import LoginPage from "../../../features/auth/components/login-form";
 import { useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { pageTransition, pageVariants } from "@/shared/components/motion";
 
 interface LayoutContainerProps {
   children: ReactNode;
@@ -20,20 +18,7 @@ export function LayoutContainer({ children }: LayoutContainerProps) {
       <Navbar />
 
       {/* Page content grows and pushes footer down */}
-      <main className="flex-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}
-          >
-            {children}
-          </motion.div>
-        </AnimatePresence>
-      </main>
+      <main className="flex-1">{children}</main>
 
       {/* Footer stays at bottom */}
       <Footer />

@@ -1,5 +1,3 @@
-"use client";
-
 import type React from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import { Add, Remove, Close } from "@mui/icons-material";

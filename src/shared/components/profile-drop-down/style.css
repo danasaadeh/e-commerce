@@ -1,4 +1,3 @@
-/* Remove unwanted MUI white layer backgrounds */
 .MuiPopover-root,
 .MuiDialog-root,
 .MuiPaper-root,
@@ -7,7 +6,6 @@
   box-shadow: none !important;
 }
 
-/* Ensure no white halo from ancestor stacking contexts */
 .glass-card {
   background: rgba(30, 30, 30, 0.4);
   backdrop-filter: blur(16px) saturate(160%);
@@ -17,15 +15,12 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   color: #fff;
   overflow: hidden;
-  isolation: isolate; /* creates new stacking context to isolate background blending */
+  isolation: isolate;
 }
-
-/* Prevent white flash on hover or buttons */
 .glass-card button {
   background-color: transparent !important;
 }
 
-/* Optional: nicer hover state */
 .glass-card button:hover {
   background-color: rgba(255, 255, 255, 0.15) !important;
 }

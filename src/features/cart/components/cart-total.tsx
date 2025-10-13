@@ -1,5 +1,3 @@
-"use client";
-
 import type React from "react";
 import { Box, Typography, Button } from "@mui/material";
 

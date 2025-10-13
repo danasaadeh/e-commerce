@@ -1,4 +1,3 @@
-// src/components/ProfileDropdown.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutHelper } from "@/features/auth/utilities/auth";

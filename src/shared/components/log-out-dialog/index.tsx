@@ -1,6 +1,3 @@
-// src/components/LogoutDialog.tsx
-"use client";
-
 import React from "react";
 import {
   Dialog,
@@ -27,7 +24,7 @@ const LogoutDialog: React.FC<LogoutDialogProps> = ({
       open={open}
       onClose={onClose}
       PaperProps={{
-        className: "logout-dialog", // ✅ Correct way to style MUI Paper
+        className: "logout-dialog",
       }}
     >
       <DialogTitle className="dialog-title">Logout</DialogTitle>
