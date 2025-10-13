@@ -40,7 +40,9 @@ const routes = [
   },
 ];
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(routes, {
+  basename: "/e-commerce",
+});
 
 export function AppRouterProvider() {
   return <RouterProvider router={router} />;
