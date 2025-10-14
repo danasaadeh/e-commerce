@@ -1,8 +1,9 @@
-import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"; // <-- note: react-router-dom, not react-router
 import { lazy } from "react";
 import { LayoutContainer } from "../shared/layout/layout-container";
 import { authRoutes } from "../features/auth/routes";
 import { aboutRoutes } from "../features/about/routes";
+import Contact from "../features/contact/pages";
 import { contactRoutes } from "../features/contact/routes";
 import { homeRoutes } from "../features/home/routes";
 import { wishListRoutes } from "@/features/wish-list/routes";
@@ -20,6 +21,7 @@ const routes = [
         <Outlet />
       </LayoutContainer>
     ),
+
     children: [
       ...authRoutes,
       ...aboutRoutes,
@@ -29,12 +31,16 @@ const routes = [
       ...cartRoutes,
       ...checkoutRoutes,
       ...productDetailsRoutes,
-      { path: "*", element: <NotFoundPage /> },
+
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      },
     ],
   },
 ];
 
-const router = createHashRouter(routes);
+const router = createBrowserRouter(routes, { basename: "/e-commerce" });
 
 export function AppRouterProvider() {
   return <RouterProvider router={router} />;
