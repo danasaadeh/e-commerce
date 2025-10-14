@@ -4,18 +4,11 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
-  base: "/e-commerce/",
+  base: "/e-commerce/", // 👈 force it, don’t depend on NODE_ENV
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: undefined, // ✅ disables code-splitting
-      },
     },
   },
 });
