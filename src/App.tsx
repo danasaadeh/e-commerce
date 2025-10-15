@@ -11,7 +11,18 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AppRouterProvider />
 
-      <ToastContainer />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light" // ensures base white background instead of transparent
+      />
     </QueryClientProvider>
   );
 }

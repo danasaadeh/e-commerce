@@ -332,7 +332,13 @@ export default function ProductCard({
         <Alert
           onClose={() => setSnackbarOpen(false)}
           severity="success"
-          sx={{ width: "100%" }}
+          sx={{
+            width: "100%",
+            bgcolor: "#fff", // ✅ solid white background
+            color: "#000", // readable text color
+            boxShadow: "0px 4px 20px rgba(0,0,0,0.1)", // subtle shadow for depth
+            borderRadius: "8px",
+          }}
         >
           {name} added to cart!
         </Alert>

@@ -21,11 +21,12 @@ const LogoutDialog: React.FC<LogoutDialogProps> = ({
 }) => {
   return (
     <Dialog
+      className="logout-dialog"
+      PaperProps={{
+        className: "MuiDialog-paper logout-dialog", // ✅ important: match MUI’s actual paper class
+      }}
       open={open}
       onClose={onClose}
-      PaperProps={{
-        className: "logout-dialog",
-      }}
     >
       <DialogTitle className="dialog-title">Logout</DialogTitle>
       <DialogContent className="dialog-content">

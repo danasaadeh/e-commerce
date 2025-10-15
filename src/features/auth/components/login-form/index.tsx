@@ -15,6 +15,7 @@ import { useTheme } from "@mui/material/styles";
 import { useLoginMutation } from "../../services/mutations";
 import { loginFormSchemaValidation } from "./config";
 import { appRoutes } from "@/routes";
+import AppSnackbar from "@/shared/components/snack-bar/app-snackbar";
 
 interface LoginFormData {
   email: string;
@@ -184,23 +185,12 @@ const LoginForm: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Snackbar */}
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { contactFormSchemaValidation, ContactFormData } from "../config";
+import AppSnackbar from "@/shared/components/snack-bar/app-snackbar";
 
 const ContactForm: React.FC = () => {
   const {
@@ -131,22 +132,12 @@ const ContactForm: React.FC = () => {
         </div>
       </form>
 
-      {/* ✅ Snackbar */}
-      <Snackbar
+      <AppSnackbar
         open={snackbar.open}
-        autoHideDuration={3000}
+        message={snackbar.message}
+        severity={snackbar.severity}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };

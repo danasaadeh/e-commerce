@@ -45,6 +45,12 @@ const InvoiceDialog: React.FC<InvoiceDialogProps> = ({
       fullScreen={isMobile}
       maxWidth="md"
       fullWidth
+      PaperProps={{
+        sx: {
+          backgroundColor: "#fff",
+          color: "#000",
+        },
+      }}
     >
       <DialogTitle
         sx={{
@@ -53,6 +59,7 @@ const InvoiceDialog: React.FC<InvoiceDialogProps> = ({
           color: "#DB4444",
           fontSize: "1.4rem",
           mt: 1,
+          backgroundColor: "#fff", // ✅ Added
         }}
       >
         E-Commerce Invoice
@@ -166,7 +173,13 @@ const InvoiceDialog: React.FC<InvoiceDialogProps> = ({
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ justifyContent: "center", pb: 2 }}>
+      <DialogActions
+        sx={{
+          justifyContent: "center",
+          pb: 2,
+          backgroundColor: "#fff", // ✅ Added
+        }}
+      >
         <Button variant="outlined" onClick={onClose}>
           Close
         </Button>
